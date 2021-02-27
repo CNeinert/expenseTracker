@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="expenseTracker" />
+        <module name="expenseTrackerJava" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="expenseTracker" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>
