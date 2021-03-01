@@ -1,6 +1,6 @@
-[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/cneinert/expenseTracker/blob/master/LICENSE)
-[![GitHub release](https://img.shields.io/github/release/Naereen/StrapDown.js.svg)](https://GitHub.com/cneinert/expenseTracker/releases/)
-![example workflow](https://github.com/github/docs/actions/workflows/main.yml/badge.svg)
+[![GitHub license](https://img.shields.io/github/license/cneinert/expenseTracker.svg)](https://github.com/cneinert/expenseTracker/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/cneinert/expenseTracker.svg)](https://GitHub.com/cneinert/expenseTracker/releases/)
+![example workflow](https://github.com/cneinert/expenseTracker/actions/workflows/maven.yml/badge.svg)
 # Expense-Tracker
 A Java Application to track your personal spending.
 
