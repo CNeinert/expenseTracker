@@ -1,9 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="main.resources.views.main.IndexController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.resources.views.main.IndexController">
+   <children>
+      <AnchorPane layoutX="235.0" layoutY="30.0" prefHeight="672.0" prefWidth="781.0">
+         <children>
+            <Label layoutX="55.0" layoutY="54.0" text="Datum" />
+            <DatePicker layoutX="55.0" layoutY="71.0" prefHeight="26.0" prefWidth="123.0" />
+            <Label layoutX="204.0" layoutY="55.0" text="Ort" />
+            <TextField layoutX="204.0" layoutY="71.0" />
+            <Label layoutX="392.0" layoutY="55.0" text="Kategorie" />
+            <ChoiceBox layoutX="392.0" layoutY="71.0" prefWidth="150.0" />
+            <TableView layoutX="55.0" layoutY="109.0" prefHeight="492.0" prefWidth="700.0">
+              <columns>
+                <TableColumn prefWidth="400.0" editable="true" text="Produktbezeichnung" />
+                <TableColumn prefWidth="100.0" editable="true" text="Einzelpreis" />
+                  <TableColumn prefWidth="100.0" editable="true" text="Anzahl" />
+                  <TableColumn prefWidth="100.0" editable="true" text="Preis gesamt" />
+              </columns>
+            </TableView>
+            <Button layoutX="391.0" layoutY="618.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="163.0" text="Speichern" />
+            <Label layoutX="566.0" layoutY="613.0" text="Status: ------------" />
+            <ProgressBar layoutX="566.0" layoutY="629.0" prefHeight="20.0" prefWidth="163.0" progress="0.0" />
+            <Label layoutX="55.0" layoutY="14.0" text="Transaktion hinzufügen">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <MenuBar prefHeight="29.0" prefWidth="1250.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" text="Save Database" />
+                  <MenuItem mnemonicParsing="false" text="Load Database" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem mnemonicParsing="false" text="Check for Updates" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
+   </children>
 </AnchorPane>
