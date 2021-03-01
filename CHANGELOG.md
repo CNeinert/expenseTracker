@@ -1,6 +1,10 @@
 # CHANGELOG
 
-v.0.0.2
+v.0.0.3
 
-v.0.0.1
+- Added GUI for the main window
+- Updated the README
+- Added the MIT Licence
+
+
 
