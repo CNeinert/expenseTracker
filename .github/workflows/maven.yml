@@ -19,12 +19,13 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        #server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+        #settings-path: ${{ github.workspace }} # location for the settings.xml file
+        java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+        architecture: aarch64 # (x64 or x86) - defaults to x64
 
     - name: Step 2 - Build with Maven
       run: |
-        pwd
         mvn -T 4 package
         mkdir staging && cp target/*.jar staging
         cd staging && mv expenseTracker* expenseTracker.jar
