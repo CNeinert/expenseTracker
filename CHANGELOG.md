@@ -1,10 +1,7 @@
 # CHANGELOG
 
-v.0.0.3
+v0.0.3.3
 
-- Added GUI for the main window
-- Updated the README
-- Added the MIT Licence
-
+- maven workflow
 
 
