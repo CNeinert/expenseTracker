@@ -24,7 +24,8 @@ jobs:
 
     - name: Step 2 - Build with Maven
       run: |
-        mvn -T 4 package --file pom.xml
+        pwd
+        mvn -T 4 package
         mkdir staging && cp target/*.jar staging
         cd staging && mv expenseTracker* expenseTracker.jar
 
