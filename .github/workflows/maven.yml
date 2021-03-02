@@ -39,7 +39,7 @@ jobs:
       with:
         name: github-actions-artifact
         path: staging
-  create release:
+  create_release:
     runs-on: ubuntu-latest
     steps:
     - name: Step 4 - create release
