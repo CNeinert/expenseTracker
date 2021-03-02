@@ -10,7 +10,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  setup:
 
     runs-on: ubuntu-latest
 
@@ -23,31 +23,39 @@ jobs:
         java-version: 14
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-
-    - name: Step 2 - Build with Maven
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Step 1 - Build with Maven
       run: |
         mvn -B package --file pom.xml
         mkdir staging && cp target/*.jar staging
         cd staging && mv expenseTracker* expenseTracker.jar
-        
-    - name: Step 3 - Persist workflow data as artifacts	
+  persist:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Persist workflow data as artifacts
       uses: actions/upload-artifact@v2
       with:
         name: github-actions-artifact
         path: staging
-        
+  create release:
+    runs-on: ubuntu-latest
+    steps:
     - name: Step 4 - create release
       uses: actions/create-release@v1
       id: create_release
       with:
           draft: false
-          prerelease: false
+          prerelease: true
           release_name: ${{ steps.version.outputs.version }}
           tag_name: ${{ github.ref }}
           body_path: CHANGELOG.md
       env:
           GITHUB_TOKEN: ${{ github.token }}
-          
+  upload artifact:
+    runs-on: ubuntu-latest
+    steps:
     - name: Step 5 - upload artifact
       uses: actions/upload-release-asset@v1
       env:
