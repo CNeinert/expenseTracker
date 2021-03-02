@@ -1,6 +1,6 @@
 # CHANGELOG
 
-v0.0.3.5
+v0.0.3.6
 
 - maven workflow
 - test self hosted
