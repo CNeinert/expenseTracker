@@ -1,8 +1,14 @@
 # CHANGELOG
 
-v0.0.3.6
+v0.0.4
 
-- maven workflow
-- test self hosted
+CREATED:
+- Model: Database
+- Model: Category
+- Model: Transaction
+- Test: TransactionTest
+
+CHANGED:
+- IndexController -> editable Table
 
 
