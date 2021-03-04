@@ -36,7 +36,7 @@ public class Database {
     public Transaction insertTransaction(Transaction transaction) throws SQLException {
 
         PreparedStatement buildState = con.prepareStatement("INSERT INTO Transactions "
-                + "(date, location, product_name, category, single_price,amount, total_price, ) VALUES "
+                + "(date, location, product_name, category, single_price,amount, total_price ) VALUES "
                 + "(?, ?, ?, ?, ?, ?, ?);");
 
         buildState.setString(1, transaction.getDate());
@@ -138,7 +138,7 @@ public class Database {
                 + ");");
         buildState.execute("CREATE TABLE Transactions ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "date TEXT default datetime('now'), "
+                + "date TEXT NOT NULL, "
                 + "location TEXT, "
                 + "product_name TEXT NOT NULL, "
                 + "category INTEGER NOT NULL, "
@@ -149,7 +149,7 @@ public class Database {
         buildState.execute("CREATE TABLE Categories ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "category TEXT NOT NULL, "
-                + "related_to TEXT, "
+                + "related_to TEXT "
                 + ");");
     }
 }

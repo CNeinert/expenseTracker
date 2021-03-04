@@ -17,10 +17,14 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
+import main.java.controller.DataController;
+import main.java.model.Category;
 import main.java.model.Transaction;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 
@@ -34,6 +38,9 @@ public class IndexController implements Initializable {
     Button SettingsButton = new Button();
     @FXML
     Label OneServerLabel = new Label();
+
+    @FXML
+    DatePicker transDate = new DatePicker();
 
 
     @FXML
@@ -50,6 +57,10 @@ public class IndexController implements Initializable {
         System.out.println("INITIALIZE! Index View");
         // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
         // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
+        transDate.setOnAction(e  -> {
+            LocalDate date = transDate.getValue();
+            System.err.println("Selected date: " + date);
+        });
         initTableCols();
 
     }
@@ -139,6 +150,22 @@ public class IndexController implements Initializable {
 
     private void changeMouse(final Cursor cursor) {
         Platform.runLater(() -> MainPane.setCursor(cursor));
+    }
+
+    public void saveNewTransaction(){
+        System.out.print("Saving...");
+        String date = transDate.getValue().toString();
+        String location = "TestLocation";
+        String product_name = "TestProduct";
+        Category category = new Category(1);
+        category.setCategory("Test");
+        double single_price = 5.0;
+        double amount = 2.0;
+        double total_price = 10.0;
+        Transaction transaction = new Transaction(date, location, product_name, category, single_price, amount, total_price);
+
+        DataController.SaveTransaction(transaction);
+        System.out.println("done.");
     }
 
 }

@@ -1,6 +1,6 @@
 # CHANGELOG
 
-v0.0.4
+v0.1.0
 
 CREATED:
 - Model: Database
@@ -11,4 +11,4 @@ CREATED:
 CHANGED:
 - IndexController -> editable Table
 
-
+- Adding Data to the Database via ButtonClickEvent

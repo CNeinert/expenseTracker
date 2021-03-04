@@ -2,9 +2,10 @@ package main.java.controller;
 
 import java.sql.SQLException;
 import main.java.model.Database;
+import main.java.model.Transaction;
 
 public class DataController {
-/*
+
     private static Database db;
 
     static {
@@ -15,26 +16,16 @@ public class DataController {
         }
     }
 
-    public static void SaveServer(Server server) {
+    public static void SaveTransaction(Transaction transaction) {
         try {
-            db.insertServer(server);
+            db.insertTransaction(transaction);
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    public static void SaveServers(Server[] servers) {
-        for (Server server : servers) {
-            try {
-                db.insertServer(server);
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-
+    /*
     public static Server[] getAllServers() {
         try {
             return db.getServers();
@@ -118,5 +109,5 @@ public class DataController {
         return null;
     }
 
- */
+*/
 }
