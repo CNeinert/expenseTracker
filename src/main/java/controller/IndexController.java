@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 
-public class IndexController implements Initializable {
+public class IndexController extends AbstractViewController {
 
     @FXML
     Pane MainPane = new Pane();
@@ -44,7 +44,7 @@ public class IndexController implements Initializable {
 
 
     @FXML
-    private TableView<Transaction> TransactionTable = new TableView<Transaction>();
+    private final TableView<Transaction> TransactionTable = new TableView<Transaction>();
 
     /*
      * @FXML private TableColumn<Program, String> programName;
@@ -66,13 +66,14 @@ public class IndexController implements Initializable {
     }
 
     @FXML
-    private void loadSettings(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Settings");
-        stage.show();
+    private void loadShowAllTransactions() throws IOException {
+        try {
+            loadView("AllTransactions");
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
+            alert.show();
+        }
+
     }
 
 
@@ -154,18 +155,26 @@ public class IndexController implements Initializable {
 
     public void saveNewTransaction(){
         System.out.print("Saving...");
-        String date = transDate.getValue().toString();
-        String location = "TestLocation";
-        String product_name = "TestProduct";
-        Category category = new Category(1);
-        category.setCategory("Test");
-        double single_price = 5.0;
-        double amount = 2.0;
-        double total_price = 10.0;
-        Transaction transaction = new Transaction(date, location, product_name, category, single_price, amount, total_price);
+        try {
+            String date = transDate.getValue().toString();
+            String location = "TestLocation";
+            String product_name = "TestProduct";
+            Category category = new Category(1);
+            category.setCategory("Test");
+            double single_price = 5.0;
+            double amount = 2.0;
+            double total_price = 10.0;
+            Transaction transaction = new Transaction(date, location, product_name, category, single_price, amount, total_price);
 
-        DataController.SaveTransaction(transaction);
-        System.out.println("done.");
+            DataController.SaveTransaction(transaction);
+            System.out.println("done.");
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Date missing");
+            alert.show();
+            System.out.println("---- FAILED! ----");
+        }
+
+
     }
 
 }
