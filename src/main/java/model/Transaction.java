@@ -1,7 +1,5 @@
 package main.java.model;
 
-import java.sql.Date;
-
 public class Transaction {
 
     private String date;
