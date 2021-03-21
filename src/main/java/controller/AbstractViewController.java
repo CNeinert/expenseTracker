@@ -12,9 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public abstract class AbstractViewController implements Initializable {
+public abstract class AbstractViewController {
 
-    public abstract void initialize(URL location, ResourceBundle resources);
+
 
     @FXML
     public void loadView(String view) throws IOException {

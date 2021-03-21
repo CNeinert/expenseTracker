@@ -1,13 +1,28 @@
 package main.java.model;
 
-public class Category {
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
+@Table(name = "Category")
+public class Category {
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
     private int category_id;
+    @Column(name = "category")
     private String category;
+    @Column(name = "related_to")
     private String related_to; //Category for Transactions, Stocks or other
 
-    public Category(int category_id) {
-        this.category_id = category_id;
+    @OneToMany(targetEntity=Transaction.class,mappedBy="category",cascade={CascadeType.ALL},orphanRemoval=false)
+    Set<Transaction> transactions = new HashSet<Transaction>();
+
+    public Category() {
+
     }
 
     public int getCategory_id() {

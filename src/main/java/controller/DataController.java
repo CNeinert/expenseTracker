@@ -4,9 +4,14 @@ import java.sql.SQLException;
 import main.java.model.Database;
 import main.java.model.Transaction;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 public class DataController {
 
     private static Database db;
+    private static EntityManagerFactory sessionFactory;
 
     static {
         try {
@@ -14,6 +19,18 @@ public class DataController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    protected static void setUp() throws Exception {
+        sessionFactory = Persistence.createEntityManagerFactory("sqlite");
+    }
+
+    public static void persist(Object object) throws Exception {
+        setUp();
+        EntityManager entityManager = sessionFactory.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(object);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public static void SaveTransaction(Transaction transaction) {

@@ -1,5 +1,5 @@
+Manifest-Version: 1.0
 Created-By: Christian Neinert
 Main-Class: main.java.run.ExpenseTracker
 JavaFX-Version: 15.0.1
-
 
