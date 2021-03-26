@@ -1,113 +1,102 @@
 package main.java.controller;
 
-import java.sql.SQLException;
-import main.java.model.Database;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import main.java.model.Category;
 import main.java.model.Transaction;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 public class DataController {
+    //Attributes
+    private String url = "jdbc:sqlite:file:data.db";
+    private ConnectionSource connectionSource;
 
-    private static Database db;
 
-    static {
+    public DataController() throws SQLException {
+        initDb();
+    }
+
+
+    //Methods
+
+    public void initDb() throws SQLException {
+        // Init
+        connect();
+        TableUtils.createTableIfNotExists( getConnectionSource(), Category.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), Transaction.class );
+    }
+
+    private void connect() throws SQLException {
+        //Connection to the sqlite db
+        setConnectionSource(new JdbcConnectionSource( getUrl(), "", "", new SqliteDatabaseType() ));
+    }
+
+
+
+    public void open(){
         try {
-            db = new Database();
-        } catch (Exception e) {
+            connect();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void close(){
+        try {
+            connectionSource.close();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
+
+    public void persist(Object object){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), (Class<Object>) object.getClass());
+            dao.create(object);
+            //close connection
+            close();
+        }
+        catch (SQLException e ) {
             e.printStackTrace();
         }
     }
 
-    public static void SaveTransaction(Transaction transaction) {
+    public Object selectById(Class classObject , Long id){
         try {
-            db.insertTransaction(transaction);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );
+            Object object = dao.queryForId( id.toString() );
+            //close connection
+            close();
+            return object;
         }
-    }
-
-    /*
-    public static Server[] getAllServers() {
-        try {
-            return db.getServers();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static void SaveProgram(Program program, Server server) {
-        try {
-            db.insertProgramm(program, server);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public static void SaveProgramsFromServer(Program[] programs, Server server) {
-        for (Program program : programs) {
-            try {
-                db.insertProgramm(program, server);
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static Program[] getProgramsFromServer(Server server) {
-        try {
-            return db.getProgramsFromServer(server);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static Server[] getServerFromProgram(Program program) {
-        try {
-            return db.getServersFromProgram(program);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    public static void SaveNewUser(User user) {
-        try {
-            db.insertUser(user);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-    public static User getUser(String username) {
-        try {
-            return db.getUser(username);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
+        catch (SQLException e ) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    public static Server updateServer(Server server) {
-        try {
-            return db.updateServer(server);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return null;
+    //Getter and Setter
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public ConnectionSource getConnectionSource() {
+        return connectionSource;
+    }
+    public void setConnectionSource(ConnectionSource connectionSource) {
+        this.connectionSource = connectionSource;
     }
 
-*/
 }

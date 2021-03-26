@@ -1,13 +1,41 @@
 package main.java.model;
 
+
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.Date;
+
+@DatabaseTable
 public class Transaction {
 
-    private String date;
-    private String location, product_name;
-    private Category category;
-    private double single_price, amount, total_price;
 
-    public Transaction(String date, String location, String product_name, Category category, double single_price, double amount, double total_price) {
+
+    @DatabaseField( generatedId = true )
+    private int transaction_id;
+
+    @DatabaseField
+    private Date date;
+
+    @DatabaseField
+    private String location;
+
+    @DatabaseField
+    private String product_name;
+
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "category_id")
+    private Category category;
+
+    @DatabaseField
+    private double single_price;
+
+    @DatabaseField
+    private double amount;
+
+    @DatabaseField
+    private double total_price;
+
+    public Transaction(Date date, String location, String product_name, Category category, double single_price, double amount, double total_price) {
         this.setDate(date);
         this.setLocation(location);
         this.setProduct_name(product_name);
@@ -19,11 +47,19 @@ public class Transaction {
 
     public Transaction(){}
 
-    public String getDate() {
+    public int getTransaction_id() {
+        return transaction_id;
+    }
+
+    public void setTransaction_id(int transaction_id) {
+        this.transaction_id = transaction_id;
+    }
+
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

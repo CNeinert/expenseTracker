@@ -3,32 +3,30 @@ package main.java.controller;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+
 import javafx.util.converter.DoubleStringConverter;
-import main.java.controller.DataController;
 import main.java.model.Category;
 import main.java.model.Transaction;
+
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 
-public class IndexController implements Initializable {
+public class IndexController extends AbstractViewController implements Initializable {
 
     @FXML
     Pane MainPane = new Pane();
@@ -42,9 +40,25 @@ public class IndexController implements Initializable {
     @FXML
     DatePicker transDate = new DatePicker();
 
+    @FXML
+    TextField location = new TextField();
 
     @FXML
-    private TableView<Transaction> TransactionTable = new TableView<Transaction>();
+    private TableView<Transaction> TransactionTable;// =
+    @FXML
+    private TableColumn<Transaction, String> product_name_col;
+
+    @FXML
+    private TableColumn<Transaction, Double> single_price_col;
+
+    @FXML
+    private TableColumn<Transaction, Double> amount_col;
+
+    @FXML
+    private TableColumn<Transaction, Double> total_price_col;
+
+
+
 
     /*
      * @FXML private TableColumn<Program, String> programName;
@@ -52,27 +66,29 @@ public class IndexController implements Initializable {
      * @FXML private TableColumn<Program, String> (SimpleStringProperty)
      * programVersion;
      */
-    @Override
+    @FXML
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("INITIALIZE! Index View");
         // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
         // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
+        initTableCols();
         transDate.setOnAction(e  -> {
             LocalDate date = transDate.getValue();
             System.err.println("Selected date: " + date);
         });
-        initTableCols();
+
 
     }
 
     @FXML
-    private void loadSettings(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Settings.fxml"));
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Settings");
-        stage.show();
+    private void loadShowAllTransactions() throws IOException {
+        try {
+            loadView("AllTransactions");
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
+            alert.show();
+        }
+
     }
 
 
@@ -81,12 +97,15 @@ public class IndexController implements Initializable {
 
     }
     //TODO Make DRY!!
-    private void initTableCols() {
+    public void initTableCols() {
+        TransactionTable = new TableView<Transaction>();
+        //this.TransactionTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         TransactionTable.setEditable(true);
-        TableColumn product_name_col = new TableColumn("Produktbezeichnung");
+
+        product_name_col = new TableColumn("Produktbezeichnung");
         product_name_col.setMinWidth(400);
         product_name_col.setEditable(true);
-        product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
+        //this.product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
         product_name_col.setCellValueFactory(new PropertyValueFactory<Transaction, String>("product_name"));
         product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, String>>() {
             @Override
@@ -96,55 +115,46 @@ public class IndexController implements Initializable {
             }
         });
 
-        TableColumn single_price_col = new TableColumn("Einzelpreis");
+
+        single_price_col = new TableColumn<>("Einzelpreis");
         single_price_col.setMinWidth(100);
         single_price_col.setEditable(true);
         single_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        single_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("single_price"));
-        single_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, Double>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Transaction transaction = (Transaction) event.getRowValue();
-                transaction.setSingle_price((Double) event.getNewValue());
-            }
+        single_price_col.setCellValueFactory(new PropertyValueFactory<>("single_price"));
+        single_price_col.setOnEditCommit(event -> {
+            Transaction transaction = event.getRowValue();
+            transaction.setSingle_price(event.getNewValue());
         });
 
-        TableColumn amount_col = new TableColumn("Menge");
+        amount_col = new TableColumn<>("Menge");
         amount_col.setMinWidth(100);
         amount_col.setEditable(true);
         amount_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        amount_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
-        amount_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, Double>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Transaction transaction = (Transaction) event.getRowValue();
-                transaction.setAmount((Double) event.getNewValue());
-            }
+        amount_col.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        amount_col.setOnEditCommit(event -> {
+            Transaction transaction = event.getRowValue();
+            transaction.setAmount(event.getNewValue());
         });
-
-        TableColumn total_price_col = new TableColumn("Gesamtpreis");
+        total_price_col = new TableColumn<>("Gesamtpreis");
         total_price_col.setMinWidth(100);
         total_price_col.setEditable(true);
         total_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter())); //TODO Handle Exeption
-        total_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("total_price"));
-        total_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, Double>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Transaction transaction = (Transaction) event.getRowValue();
-                transaction.setTotal_price((Double) event.getNewValue());
-            }
+        total_price_col.setCellValueFactory(new PropertyValueFactory<>("total_price"));
+        total_price_col.setOnEditCommit(event -> {
+            Transaction transaction = event.getRowValue();
+            transaction.setTotal_price(event.getNewValue());
         });
 
         // Casting the program Array to an ObservableList
         ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
         transactionObservableList.add(new Transaction());
 
-
         TransactionTable.setItems(transactionObservableList);
         //TransactionTable.getColumns().removeAll();
-        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,total_price_col );
 
+        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,total_price_col );
         TransactionTable.getRowFactory();
+        System.out.println("Init Table");
     }
 
 
@@ -154,18 +164,31 @@ public class IndexController implements Initializable {
 
     public void saveNewTransaction(){
         System.out.print("Saving...");
-        String date = transDate.getValue().toString();
-        String location = "TestLocation";
-        String product_name = "TestProduct";
-        Category category = new Category(1);
-        category.setCategory("Test");
-        double single_price = 5.0;
-        double amount = 2.0;
-        double total_price = 10.0;
-        Transaction transaction = new Transaction(date, location, product_name, category, single_price, amount, total_price);
+        try {
+            Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            String locationText = location.getText();
+            String product_name = "TestProduct";
+            Category category = new Category();
+            category.setCategory("Test");
+            double single_price = 5.0;
+            double amount = 2.0;
+            double total_price = 10.0;
+            Transaction transaction = new Transaction(date, locationText, product_name, category, single_price, amount, total_price);
 
-        DataController.SaveTransaction(transaction);
-        System.out.println("done.");
+            DataController dc = new DataController();
+            dc.persist(category);
+            dc.persist(transaction);
+
+            System.out.println("Location: "+ locationText);
+            System.out.println("done.");
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Date missing");
+            alert.show();
+            e.printStackTrace();
+            System.out.println("---- FAILED! ----");
+        }
+
+
     }
 
 }

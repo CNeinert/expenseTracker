@@ -11,10 +11,13 @@
             <Label layoutX="55.0" layoutY="54.0" text="Datum" />
             <DatePicker fx:id="transDate" layoutX="55.0" layoutY="71.0" prefHeight="26.0" prefWidth="123.0" />
             <Label layoutX="204.0" layoutY="55.0" text="Ort" />
-            <TextField layoutX="204.0" layoutY="71.0" />
+            <TextField fx:id="location" layoutX="204.0" layoutY="71.0" />
             <Label layoutX="392.0" layoutY="55.0" text="Kategorie" />
             <ChoiceBox layoutX="392.0" layoutY="71.0" prefWidth="150.0" />
-            <TableView fx:id="TransactionTable" editable="true" layoutX="55.0" layoutY="109.0" prefHeight="492.0" prefWidth="700.0" />
+            <TableView fx:id="TransactionTable" editable="true" layoutX="55.0" layoutY="109.0" prefHeight="492.0" prefWidth="700.0">
+               <columns>
+
+               </columns></TableView>
             <Button layoutX="391.0" layoutY="618.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="26.0" prefWidth="163.0" text="Speichern" />
             <Label layoutX="566.0" layoutY="613.0" text="Status: ------------" />
             <ProgressBar layoutX="566.0" layoutY="629.0" prefHeight="20.0" prefWidth="163.0" progress="0.0" />
@@ -49,5 +52,6 @@
         </menus>
       </MenuBar>
       <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
+      <Button layoutX="57.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" text="Show all Transactions" />
    </children>
 </AnchorPane>

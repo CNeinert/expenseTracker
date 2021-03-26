@@ -1,13 +1,27 @@
 package main.java.model;
 
-public class Category {
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
+import java.util.HashSet;
+import java.util.Set;
+
+@DatabaseTable
+public class Category {
+    @DatabaseField( generatedId = true )
     private int category_id;
+    @DatabaseField
     private String category;
+    @DatabaseField
     private String related_to; //Category for Transactions, Stocks or other
 
-    public Category(int category_id) {
-        this.category_id = category_id;
+    @ForeignCollectionField(eager = true)
+    java.util.Collection<Transaction> transactions;
+
+    public Category() {
+
     }
 
     public int getCategory_id() {

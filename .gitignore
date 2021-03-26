@@ -1,4 +1,4 @@
 /target/
-.idea
+/.idea/
 .gradle
-/expense-tracker-database.db
+/data.db
