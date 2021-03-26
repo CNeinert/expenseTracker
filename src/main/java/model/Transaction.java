@@ -1,42 +1,38 @@
 package main.java.model;
 
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.Date;
 
-@Entity
-@Table( name = "Transactions" )
+@DatabaseTable
 public class Transaction {
 
 
 
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    private int id;
+    @DatabaseField( generatedId = true )
+    private int transaction_id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date")
+    @DatabaseField
     private Date date;
 
-    @Column(name = "location")
+    @DatabaseField
     private String location;
 
-    @Column(name = "product_name")
+    @DatabaseField
     private String product_name;
 
-    @ManyToOne(targetEntity=Category.class)
-    @JoinColumn(name="category_id")
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "category_id")
     private Category category;
 
-    @Column(name = "single_price")
+    @DatabaseField
     private double single_price;
 
-    @Column(name = "amount")
+    @DatabaseField
     private double amount;
 
-    @Column(name = "total_price")
+    @DatabaseField
     private double total_price;
 
     public Transaction(Date date, String location, String product_name, Category category, double single_price, double amount, double total_price) {
@@ -51,12 +47,12 @@ public class Transaction {
 
     public Transaction(){}
 
-    public int getId() {
-        return id;
+    public int getTransaction_id() {
+        return transaction_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTransaction_id(int transaction_id) {
+        this.transaction_id = transaction_id;
     }
 
     public Date getDate() {

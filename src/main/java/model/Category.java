@@ -1,25 +1,24 @@
 package main.java.model;
 
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.table.DatabaseTable;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "Category")
+@DatabaseTable
 public class Category {
-    @Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
+    @DatabaseField( generatedId = true )
     private int category_id;
-    @Column(name = "category")
+    @DatabaseField
     private String category;
-    @Column(name = "related_to")
+    @DatabaseField
     private String related_to; //Category for Transactions, Stocks or other
 
-    @OneToMany(targetEntity=Transaction.class,mappedBy="category",cascade={CascadeType.ALL},orphanRemoval=false)
-    Set<Transaction> transactions = new HashSet<Transaction>();
+    @ForeignCollectionField(eager = true)
+    java.util.Collection<Transaction> transactions;
 
     public Category() {
 

@@ -16,9 +16,7 @@ import javafx.util.converter.DoubleStringConverter;
 import main.java.model.Category;
 import main.java.model.Transaction;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -177,17 +175,10 @@ public class IndexController extends AbstractViewController implements Initializ
             double total_price = 10.0;
             Transaction transaction = new Transaction(date, locationText, product_name, category, single_price, amount, total_price);
 
+            DataController dc = new DataController();
+            dc.persist(category);
+            dc.persist(transaction);
 
-            EntityManagerFactory sessionFactory = Persistence.createEntityManagerFactory("sqlite");
-
-            EntityManager entityManager = sessionFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            entityManager.persist(category);
-            //entityManager.persist(transaction);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-
-            DataController.persist(transaction);
             System.out.println("Location: "+ locationText);
             System.out.println("done.");
         }catch (Exception e){
