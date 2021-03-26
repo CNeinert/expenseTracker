@@ -1,14 +1,8 @@
 # CHANGELOG
 
-v0.1.0
+v0.2.0
+(pre release)
 
-CREATED:
-- Model: Database
-- Model: Category
-- Model: Transaction
-- Test: TransactionTest
-
-CHANGED:
-- IndexController -> editable Table
-
-- Adding Data to the Database via ButtonClickEvent
+- Added the ormLite
+- successfully write to sqlite database
+- moved to javaFx 15.0.1 -> 16 (testing)
