@@ -6,8 +6,7 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import main.java.model.Category;
-import main.java.model.Transaction;
+import main.java.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,8 +27,15 @@ public class DataController {
     public void initDb() throws SQLException {
         // Init
         connect();
-        TableUtils.createTableIfNotExists( getConnectionSource(), Category.class );
+
         TableUtils.createTableIfNotExists( getConnectionSource(), Transaction.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), Product.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), JoinTransactionProduct.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), Location.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), TransactionCategory.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), LocationCategory.class );
+
+
     }
 
     private void connect() throws SQLException {

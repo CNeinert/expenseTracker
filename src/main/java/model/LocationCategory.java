@@ -1,26 +1,23 @@
 package main.java.model;
 
-
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @DatabaseTable
-public class Category {
+public class LocationCategory {
     @DatabaseField( generatedId = true )
     private int category_id;
     @DatabaseField
-    private String category;
+    private String locationCategory;
     @DatabaseField
     private String related_to; //Category for Transactions, Stocks or other
 
     @ForeignCollectionField(eager = true)
-    java.util.Collection<Transaction> transactions;
+    java.util.Collection<Location> location;
 
-    public Category() {
+    public LocationCategory() {
 
     }
 
@@ -32,13 +29,12 @@ public class Category {
         this.category_id = category_id;
     }
 
-
-    public String getCategory() {
-        return category;
+    public String getLocationCategory() {
+        return locationCategory;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setLocationCategory(String locationCategory) {
+        this.locationCategory = locationCategory;
     }
 
     public String getRelated_to() {
@@ -48,5 +44,4 @@ public class Category {
     public void setRelated_to(String related_to) {
         this.related_to = related_to;
     }
-
 }

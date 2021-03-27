@@ -13,7 +13,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 
 import javafx.util.converter.DoubleStringConverter;
-import main.java.model.Category;
+import main.java.model.TransactionCategory;
 import main.java.model.Transaction;
 
 
@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -123,7 +122,7 @@ public class IndexController extends AbstractViewController implements Initializ
         single_price_col.setCellValueFactory(new PropertyValueFactory<>("single_price"));
         single_price_col.setOnEditCommit(event -> {
             Transaction transaction = event.getRowValue();
-            transaction.setSingle_price(event.getNewValue());
+            //transaction.setSingle_price(event.getNewValue());
         });
 
         amount_col = new TableColumn<>("Menge");
@@ -133,7 +132,7 @@ public class IndexController extends AbstractViewController implements Initializ
         amount_col.setCellValueFactory(new PropertyValueFactory<>("amount"));
         amount_col.setOnEditCommit(event -> {
             Transaction transaction = event.getRowValue();
-            transaction.setAmount(event.getNewValue());
+            //transaction.setAmount(event.getNewValue());
         });
         total_price_col = new TableColumn<>("Gesamtpreis");
         total_price_col.setMinWidth(100);
@@ -168,15 +167,15 @@ public class IndexController extends AbstractViewController implements Initializ
             Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             String locationText = location.getText();
             String product_name = "TestProduct";
-            Category category = new Category();
-            category.setCategory("Test");
+            TransactionCategory transactionCategory = new TransactionCategory();
+            transactionCategory.setCategory("Test");
             double single_price = 5.0;
             double amount = 2.0;
             double total_price = 10.0;
-            Transaction transaction = new Transaction(date, locationText, product_name, category, single_price, amount, total_price);
+            Transaction transaction = new Transaction(date, product_name, transactionCategory, total_price);
 
             DataController dc = new DataController();
-            dc.persist(category);
+            dc.persist(transactionCategory);
             dc.persist(transaction);
 
             System.out.println("Location: "+ locationText);

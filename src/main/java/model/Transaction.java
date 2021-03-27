@@ -1,15 +1,15 @@
 package main.java.model;
 
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
 @DatabaseTable
 public class Transaction {
-
-
 
     @DatabaseField( generatedId = true )
     private int transaction_id;
@@ -18,32 +18,27 @@ public class Transaction {
     private Date date;
 
     @DatabaseField
-    private String location;
-
-    @DatabaseField
     private String product_name;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "category_id")
-    private Category category;
+    private TransactionCategory transactionCategory;
 
-    @DatabaseField
-    private double single_price;
+    @ForeignCollectionField(eager = true)
+    java.util.Collection<JoinTransactionProduct> joinTransactionProducts;
 
-    @DatabaseField
-    private double amount;
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "location_id")
+    private Location location;
 
     @DatabaseField
     private double total_price;
 
-    public Transaction(Date date, String location, String product_name, Category category, double single_price, double amount, double total_price) {
+    public Transaction(Date date, String product_name, TransactionCategory transactionCategory, double total_price) {
         this.setDate(date);
-        this.setLocation(location);
         this.setProduct_name(product_name);
-        this.setCategory(category);
-        this.setSingle_price(single_price);
-        this.setAmount(amount);
+        this.setCategory(transactionCategory);
         this.setTotal_price(total_price);
     }
+
 
     public Transaction(){}
 
@@ -63,14 +58,6 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getProduct_name() {
         return product_name;
     }
@@ -79,29 +66,15 @@ public class Transaction {
         this.product_name = product_name;
     }
 
-    public Category getCategory() {
-        return category;
+    public TransactionCategory getCategory() {
+        return transactionCategory;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(TransactionCategory transactionCategory) {
+        this.transactionCategory = transactionCategory;
     }
 
-    public double getSingle_price() {
-        return single_price;
-    }
 
-    public void setSingle_price(double single_price) {
-        this.single_price = single_price;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
 
     public double getTotal_price() {
         return total_price;
