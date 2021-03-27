@@ -14,7 +14,7 @@ public class TransactionCategory {
     private String category;
 
     @DatabaseField
-    private String related_to; //Category for Transactions, Stocks or other
+    private Boolean income; //Category for Transactions, Stocks or other
 
     @ForeignCollectionField(eager = true)
     java.util.Collection<Transaction> transactions;
@@ -40,12 +40,11 @@ public class TransactionCategory {
         this.category = category;
     }
 
-    public String getRelated_to() {
-        return related_to;
+    public Boolean isIncome() {
+        return income;
     }
 
-    public void setRelated_to(String related_to) {
-        this.related_to = related_to;
+    public void setIncome(Boolean income) {
+        this.income = income;
     }
-
 }

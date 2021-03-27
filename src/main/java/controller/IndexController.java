@@ -97,14 +97,11 @@ public class IndexController extends AbstractViewController implements Initializ
     }
     //TODO Make DRY!!
     public void initTableCols() {
-        TransactionTable = new TableView<Transaction>();
-        //this.TransactionTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         TransactionTable.setEditable(true);
-
-        product_name_col = new TableColumn("Produktbezeichnung");
+        TableColumn product_name_col = new TableColumn("Produktbezeichnung");
         product_name_col.setMinWidth(400);
         product_name_col.setEditable(true);
-        //this.product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
+        product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
         product_name_col.setCellValueFactory(new PropertyValueFactory<Transaction, String>("product_name"));
         product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, String>>() {
             @Override
@@ -114,34 +111,31 @@ public class IndexController extends AbstractViewController implements Initializ
             }
         });
 
-
-        single_price_col = new TableColumn<>("Einzelpreis");
+        TableColumn single_price_col = new TableColumn("Einzelpreis");
         single_price_col.setMinWidth(100);
         single_price_col.setEditable(true);
         single_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        single_price_col.setCellValueFactory(new PropertyValueFactory<>("single_price"));
-        single_price_col.setOnEditCommit(event -> {
-            Transaction transaction = event.getRowValue();
-            //transaction.setSingle_price(event.getNewValue());
-        });
+        single_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("single_price"));
 
-        amount_col = new TableColumn<>("Menge");
+
+        TableColumn amount_col = new TableColumn("Menge");
         amount_col.setMinWidth(100);
         amount_col.setEditable(true);
         amount_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        amount_col.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        amount_col.setOnEditCommit(event -> {
-            Transaction transaction = event.getRowValue();
-            //transaction.setAmount(event.getNewValue());
-        });
-        total_price_col = new TableColumn<>("Gesamtpreis");
+        amount_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+
+
+        TableColumn total_price_col = new TableColumn("Gesamtpreis");
         total_price_col.setMinWidth(100);
         total_price_col.setEditable(true);
         total_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter())); //TODO Handle Exeption
-        total_price_col.setCellValueFactory(new PropertyValueFactory<>("total_price"));
-        total_price_col.setOnEditCommit(event -> {
-            Transaction transaction = event.getRowValue();
-            transaction.setTotal_price(event.getNewValue());
+        total_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("total_price"));
+        total_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, Double>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent event) {
+                Transaction transaction = (Transaction) event.getRowValue();
+                transaction.setTotal_price((Double) event.getNewValue());
+            }
         });
 
         // Casting the program Array to an ObservableList
