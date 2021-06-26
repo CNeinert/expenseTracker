@@ -19,11 +19,21 @@ public class Product {
     @DatabaseField
     private double amount;
 
+    @DatabaseField
+    private String notes;
+
     @ForeignCollectionField(eager = true)
     java.util.Collection<JoinTransactionProduct> joinTransactionProducts;
 
     public Product(){ }
 
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public double getSingle_price() {
         return single_price;
@@ -39,5 +49,13 @@ public class Product {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

@@ -10,6 +10,7 @@ import main.java.model.*;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class DataController {
     //Attributes
@@ -17,8 +18,12 @@ public class DataController {
     private ConnectionSource connectionSource;
 
 
-    public DataController() throws SQLException {
-        initDb();
+    public DataController()  {
+        try{
+            initDb();
+        }catch (SQLException sqle){
+            System.err.println("[DATABASE] -> Failed to initialise the database!");
+        }
     }
 
 
@@ -129,7 +134,36 @@ public class DataController {
             e.printStackTrace();
             return null;
         }
+    }
 
+    public List<Object> selectAll(Class classObject){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );
+            List<Object> list = dao.queryForAll();
+            //close connection
+            close();
+            return list;
+        }
+        catch (SQLException e ) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public List<Object> selectAllByField(Class classObject, String field, Object object){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject);
+            List<Object> queryResult = dao.queryForEq( field, object );
+            //close connection
+            close();
+            return queryResult;
+        }
+        catch (SQLException e ) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     //Getter and Setter

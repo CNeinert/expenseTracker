@@ -10,10 +10,10 @@
          <children>
             <Label layoutX="55.0" layoutY="54.0" text="Datum" />
             <DatePicker fx:id="transDate" layoutX="55.0" layoutY="71.0" prefHeight="26.0" prefWidth="123.0" />
-            <Label layoutX="204.0" layoutY="55.0" text="Ort" />
-            <TextField fx:id="location" layoutX="204.0" layoutY="71.0" />
-            <Label layoutX="392.0" layoutY="55.0" text="Kategorie" />
-            <ChoiceBox layoutX="392.0" layoutY="71.0" prefWidth="150.0" />
+            <Label layoutX="354.0" layoutY="55.0" text="Ort" />
+            <TextField fx:id="location" layoutX="354.0" layoutY="71.0" />
+            <Label layoutX="536.0" layoutY="55.0" text="Ortstyp" />
+            <ChoiceBox fx:id="locationCategorieField" layoutX="536.0" layoutY="71.0" prefWidth="150.0" />
             <TableView fx:id="TransactionTable" editable="true" layoutX="55.0" layoutY="109.0" prefHeight="492.0" prefWidth="700.0">
                <columns>
 
@@ -26,6 +26,8 @@
                   <Font size="24.0" />
                </font>
             </Label>
+            <Label layoutX="197.0" layoutY="55.0" text="Kategorie" />
+            <ChoiceBox fx:id="transactionCategorieField" layoutX="197.0" layoutY="71.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
       <MenuBar prefHeight="29.0" prefWidth="1250.0">

@@ -11,17 +11,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
-
 import javafx.util.converter.DoubleStringConverter;
-import main.java.model.TransactionCategory;
+import main.java.model.LocationCategory;
+import main.java.model.Product;
 import main.java.model.Transaction;
-
+import main.java.model.TransactionCategory;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -43,7 +44,13 @@ public class IndexController extends AbstractViewController implements Initializ
     TextField location = new TextField();
 
     @FXML
-    private TableView<Transaction> TransactionTable;// =
+    ChoiceBox transactionCategorieField;
+
+    @FXML
+    ChoiceBox locationCategorieField;
+
+    @FXML
+    private TableView<Product> TransactionTable;// =
     @FXML
     private TableColumn<Transaction, String> product_name_col;
 
@@ -71,6 +78,7 @@ public class IndexController extends AbstractViewController implements Initializ
         // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
         // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
         initTableCols();
+        initChoiceBoxes();
         transDate.setOnAction(e  -> {
             LocalDate date = transDate.getValue();
             System.err.println("Selected date: " + date);
@@ -95,19 +103,25 @@ public class IndexController extends AbstractViewController implements Initializ
     public void showOverview() {
 
     }
+
     //TODO Make DRY!!
     public void initTableCols() {
+        ObservableList<Product> productObservableList = FXCollections.observableArrayList();
+        productObservableList.add(new Product());
         TransactionTable.setEditable(true);
         TableColumn product_name_col = new TableColumn("Produktbezeichnung");
-        product_name_col.setMinWidth(400);
+        product_name_col.setMinWidth(300);
         product_name_col.setEditable(true);
         product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
-        product_name_col.setCellValueFactory(new PropertyValueFactory<Transaction, String>("product_name"));
-        product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, String>>() {
+        product_name_col.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent event) {
-                Transaction transaction = (Transaction) event.getRowValue();
-                transaction.setProduct_name(event.getNewValue().toString());
+                Product product = (Product) event.getRowValue();
+                product.setProductName(event.getNewValue().toString());
+                productObservableList.add(new Product());
+                TransactionTable.refresh();
+
             }
         });
 
@@ -115,37 +129,37 @@ public class IndexController extends AbstractViewController implements Initializ
         single_price_col.setMinWidth(100);
         single_price_col.setEditable(true);
         single_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        single_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("single_price"));
+        single_price_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("single_price"));
 
 
         TableColumn amount_col = new TableColumn("Menge");
         amount_col.setMinWidth(100);
         amount_col.setEditable(true);
         amount_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        amount_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+        amount_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("amount"));
 
 
-        TableColumn total_price_col = new TableColumn("Gesamtpreis");
-        total_price_col.setMinWidth(100);
-        total_price_col.setEditable(true);
-        total_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter())); //TODO Handle Exeption
-        total_price_col.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("total_price"));
-        total_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Transaction, Double>>() {
+        TableColumn notes_col = new TableColumn("Notizen");
+        notes_col.setMinWidth(200);
+        notes_col.setEditable(true);
+        notes_col.setCellFactory(TextFieldTableCell.forTableColumn()); //TODO Handle Exeption
+        notes_col.setCellValueFactory(new PropertyValueFactory<Product, String>("notes"));
+        notes_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent event) {
-                Transaction transaction = (Transaction) event.getRowValue();
-                transaction.setTotal_price((Double) event.getNewValue());
+                Product transaction = (Product) event.getRowValue();
+                transaction.setNotes(event.getNewValue().toString());
+                TransactionTable.refresh();
             }
         });
 
-        // Casting the program Array to an ObservableList
-        ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
-        transactionObservableList.add(new Transaction());
 
-        TransactionTable.setItems(transactionObservableList);
+
+
+        TransactionTable.setItems(productObservableList);
         //TransactionTable.getColumns().removeAll();
 
-        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,total_price_col );
+        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,notes_col );
         TransactionTable.getRowFactory();
         System.out.println("Init Table");
     }
@@ -155,21 +169,67 @@ public class IndexController extends AbstractViewController implements Initializ
         Platform.runLater(() -> MainPane.setCursor(cursor));
     }
 
+    private void initChoiceBoxes(){
+        ObservableList<String> olTransCategory = FXCollections.observableArrayList();
+        DataController dc = new DataController();
+        List<Object> list = dc.selectAll(TransactionCategory.class);
+        for (Object item : list) {
+            TransactionCategory thisItem = (TransactionCategory)item;
+            olTransCategory.add(thisItem.getCategory());
+        }
+
+        transactionCategorieField.setItems(olTransCategory);
+
+        ObservableList<String> olLocationCategory = FXCollections.observableArrayList();
+        DataController dc2 = new DataController();
+        List<Object> list1 = dc2.selectAll(LocationCategory.class);
+        for (Object item : list1) {
+            LocationCategory thisItem = (LocationCategory)item;
+            olLocationCategory.add(thisItem.getLocationCategory());
+        }
+
+        locationCategorieField.setItems(olLocationCategory);
+    }
+
     public void saveNewTransaction(){
         System.out.print("Saving...");
+        System.err.println("Hello World!");
         try {
+            DataController dc = new DataController();
             Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             String locationText = location.getText();
             String product_name = "TestProduct";
             TransactionCategory transactionCategory = new TransactionCategory();
-            transactionCategory.setCategory("Test");
+            transactionCategory.setCategory(transactionCategorieField.getValue().toString());
+            LocationCategory locationCategorie = new LocationCategory();
+            locationCategorie.setLocationCategory(locationCategorieField.getValue().toString());
             double single_price = 5.0;
             double amount = 2.0;
             double total_price = 10.0;
             Transaction transaction = new Transaction(date, product_name, transactionCategory, total_price);
 
-            DataController dc = new DataController();
-            dc.persist(transactionCategory);
+            //region HANDLE CATEGORIES
+            // Persist if not exists... why
+
+            TransactionCategory transCatFromDb = (TransactionCategory) dc.selectAllByField
+                    (transactionCategory.getClass(), "category", transactionCategory.getCategory()).get(0);
+
+            if (transCatFromDb == null){
+                dc.persist(transactionCategory);
+            }else{
+                transactionCategory = transCatFromDb;
+            }
+
+            LocationCategory locationCategorieFromDb = (LocationCategory) dc.selectAllByField
+                    (locationCategorie.getClass(), "locationCategory", locationCategorie.getLocationCategory()).get(0);
+            //Persist if not exists
+            if (locationCategorieFromDb == null){
+                dc.persist(transactionCategory);
+            }else{
+                locationCategorie = locationCategorieFromDb;
+            }
+            //endregion
+
             dc.persist(transaction);
 
             System.out.println("Location: "+ locationText);
