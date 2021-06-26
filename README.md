@@ -7,9 +7,8 @@ A Java Application to track your personal spending.
 
 ## Installation
 
-Java 11 is required for the Application to run. 
-Link: [jdk.java.net](https://jdk.java.net/java-se-ri/11)
-
+[Java 11](https://jdk.java.net/java-se-ri/11) is required for the Application to run. Works with [Java 15](https://www.oracle.com/de/java/technologies/javase-jdk15-downloads.html) aswell. 
+<br>
 The Application is bundled as a standalone jar File. 
 <br>
 Download the newest Version from the Releases.
