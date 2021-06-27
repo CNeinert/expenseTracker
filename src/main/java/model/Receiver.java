@@ -6,30 +6,30 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable
 public class Receiver {
     @DatabaseField(generatedId = true)
-    private int recieverId;
+    private int receiverId;
     @DatabaseField
-    private String recieverName;
+    private String receiverName;
 
     public Receiver(String receiver){
-        this.setRecieverName(receiver);
+        this.setReceiverName(receiver);
     }
 
     public Receiver (){ }
 
-    public int getRecieverId() {
-        return recieverId;
+    public int getReceiverId() {
+        return receiverId;
     }
 
-    public void setRecieverId(int recieverId) {
-        this.recieverId = recieverId;
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public String getRecieverName() {
-        return recieverName;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setRecieverName(String recieverName) {
-        this.recieverName = recieverName;
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
     }
 
 }

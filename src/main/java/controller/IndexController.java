@@ -1,6 +1,8 @@
 package main.java.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -16,6 +18,8 @@ import main.java.model.TransactionCategory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -60,8 +64,11 @@ public class IndexController extends AbstractViewController implements Initializ
     private ComboBox<String> tx_receiver = new ComboBox<String>();
 
     @FXML
-    private Spinner<Double> amount = new Spinner<>(0.0, Double.MAX_VALUE, 0.0, 0.01);
+    private Spinner<Double> amount = new Spinner<>(Double.MIN_VALUE, Double.MAX_VALUE, 0.00, 0.01);
+    private final DecimalFormat df = new DecimalFormat("#.##");
 
+    @FXML
+    private TextArea txf_notes = new TextArea();
     /*
      * @FXML private TableColumn<Program, String> programName;
      *
@@ -71,6 +78,7 @@ public class IndexController extends AbstractViewController implements Initializ
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("INITIALIZE! Index View");
+
         // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
         // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
         //initTableCols();
@@ -86,11 +94,47 @@ public class IndexController extends AbstractViewController implements Initializ
         });
         amount.setEditable(true);
         SpinnerValueFactory<Double> amountValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(Double.MIN_VALUE, Double.MAX_VALUE);
-        amountValueFactory.setValue(0.00D);
 
+        amountValueFactory.setConverter(new StringConverter<Double>() {
+            private final DecimalFormat df = new DecimalFormat("#.##");
+
+            @Override
+            public String toString(Double aDouble) {
+                // If the specified value is null, return a zero-length String
+                return this.df.format(aDouble);
+            }
+
+            @Override
+            public Double fromString(String s) {
+                try {
+                    // If the specified value is null or zero-length, return null
+                    if (s == null) {
+                        return null;
+                    }
+                    s = s.trim();
+                    if (s.length() < 1) {
+                        return null;
+                    }
+                    // Perform the requested parsing
+                    return df.parse(s).doubleValue();
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
         amount.setValueFactory(amountValueFactory);
-        //amount.
-        System.out.println("Amount: " + amount.getValue().toString());
+        amount.valueProperty().addListener(new ChangeListener<Double>() {
+            @Override
+            public void changed(ObservableValue<? extends Double> observableValue, Double aDouble, Double t1) {
+
+                //System.out.println("observableValue: " +observableValue.getValue());
+                //System.out.println("aDouble: " +aDouble.toString().toString());
+                //System.out.println("t1: " +t1.toString());
+                //System.out.println("Amount: " + amount.getValue().toString());
+            }
+        });
+
+        amountValueFactory.setValue(0.01);
     }
 
     @FXML
@@ -103,8 +147,6 @@ public class IndexController extends AbstractViewController implements Initializ
         }
 
     }
-
-
 
     public void showOverview() {
 
@@ -210,7 +252,7 @@ public class IndexController extends AbstractViewController implements Initializ
         }
         for (Object item : ReceiversList) {
             Receiver thisItem = (Receiver) item;
-            olReceivers.add(thisItem.getRecieverName());
+            olReceivers.add(thisItem.getReceiverName());
         }
 
         transactionCategorieField.setItems(olTransCategory);
@@ -225,29 +267,36 @@ public class IndexController extends AbstractViewController implements Initializ
         try {
             DataController dc = new DataController();
             Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            var paymentMethods = dc.selectAllByField(PaymentMethod.class, paymentMethodField.getValue().toString(), new PaymentMethod(paymentMethodField.getValue().toString()));
-            var category = dc.selectAllByField(TransactionCategory.class, transactionCategorieField.getValue().toString(), new TransactionCategory(transactionCategorieField.getValue().toString()));
-            var receivers = dc.selectAllByField(Receiver.class, tx_receiver.getValue().toString(), new Receiver(tx_receiver.getValue().toString()));
-            if (receivers.size() == 0){
-                Receiver receiver = new Receiver(tx_receiver.getValue().toString());
-                dc.persist(receiver);
-                receivers.add(receiver);
-            }
+
+            var paymentMethods = dc.findByIdentifier(PaymentMethod.class, "paymentMethod", paymentMethodField.getValue().toString());
+            System.out.println(paymentMethods);
+            var category = dc.findByIdentifier(TransactionCategory.class, "category", transactionCategorieField.getValue().toString());
+            var receiver = dc.findByIdentifier(Receiver.class, "receiverName", tx_receiver.getValue().toString());
+
 
             Transaction transaction = new Transaction();
             transaction.setDate(date);
-            transaction.setPaymentMethod((PaymentMethod) paymentMethods.get(0));
-            transaction.setTransactionCategory((TransactionCategory) category.get(0));
-            transaction.setReceiver((Receiver) receivers.get(0));
-            if (toggleGroup.getSelectedToggle().toString().equals("")){
-                //transaction.setAmount();
-            }else{
-
+            transaction.setPaymentMethod((PaymentMethod) paymentMethods);
+            transaction.setTransactionCategory((TransactionCategory) category);
+            if (receiver == null){
+                Receiver newreceiver = new Receiver(tx_receiver.getValue().toString());
+                dc.persist(newreceiver);
+                receiver = newreceiver;
             }
+            transaction.setReceiver((Receiver) receiver);
+            transaction.setAmount(amount.getValue());
+            if (toggleGroup.getSelectedToggle().toString().equals("radioMoneyIncome")){
+                transaction.setCorrectValue(true);
+            }else{
+                transaction.setCorrectValue(false);
+            }
+            transaction.setNotes(txf_notes.getText());
+            dc.persist(transaction);
 
             System.out.println("done.");
+            resetView();
         }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR,  "Date missing");
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to save transaction");
             alert.show();
             e.printStackTrace();
             System.out.println("---- FAILED! ----");
@@ -276,6 +325,14 @@ public class IndexController extends AbstractViewController implements Initializ
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
                 "New Category: '"+newCategory.getCategory().toString()+"' created");
         alert.show();
+    }
+
+    public void resetView(){
+        tx_newPaymentMethod.setText("");
+        tx_newCategory.setText("");
+        radioMoneyOutcome.setSelected(true);
+        radioMoneyIncome.setSelected(false);
+        txf_notes.setText("");
     }
 
 }

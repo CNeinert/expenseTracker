@@ -38,7 +38,7 @@
             <Label layoutX="56.0" layoutY="168.0" text="Empfänger" />
             <Spinner fx:id="amount" editable="true" layoutX="226.0" layoutY="246.0" prefHeight="26.0" prefWidth="142.0" />
             <Label layoutX="226.0" layoutY="230.0" text="Betrag" />
-            <TextArea layoutX="56.0" layoutY="307.0" prefHeight="85.0" prefWidth="316.0" />
+            <TextArea fx:id="txf_notes" layoutX="56.0" layoutY="307.0" prefHeight="85.0" prefWidth="316.0" />
             <TextField fx:id="tx_newPaymentMethod" layoutX="631.0" layoutY="163.0" />
             <Label layoutX="631.0" layoutY="145.0" text="Zahlungsart hinzufügen" />
             <Button layoutX="700.0" layoutY="197.0" mnemonicParsing="false" onAction="#saveNewPaymentMethod" prefHeight="26.0" prefWidth="102.0" text="Speichern" />

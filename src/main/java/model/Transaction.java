@@ -97,7 +97,7 @@ public class Transaction {
     }
 
 
-    private void setCorrectValue(Boolean isIncome){
+    public void setCorrectValue(Boolean isIncome){
         if (isIncome){
             if (this.getAmount() < 0){
                 this.setAmount(this.getAmount()*(-1));

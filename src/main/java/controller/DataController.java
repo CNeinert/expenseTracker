@@ -153,6 +153,25 @@ public class DataController {
         return null;
     }
 
+    public Object findByIdentifier(Class classObject, String fieldname, String searchterm){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject);
+            var queryResults = dao.queryBuilder().where().eq(fieldname, searchterm).query();
+            //close connection
+            close();
+            if (queryResults.size() > 0 ){
+                return queryResults.get(0);
+            }
+            return null;
+        }
+        catch (SQLException e ) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     //Getter and Setter
     public String getUrl() {
         return url;
