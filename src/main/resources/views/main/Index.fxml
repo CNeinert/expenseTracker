@@ -1,33 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.IndexController">
    <children>
-      <AnchorPane layoutX="235.0" layoutY="30.0" prefHeight="672.0" prefWidth="781.0">
+      <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="672.0" prefWidth="893.0">
          <children>
             <Label layoutX="55.0" layoutY="54.0" text="Datum" />
             <DatePicker fx:id="transDate" layoutX="55.0" layoutY="71.0" prefHeight="26.0" prefWidth="123.0" />
-            <Label layoutX="354.0" layoutY="55.0" text="Ort" />
-            <TextField fx:id="location" layoutX="354.0" layoutY="71.0" />
-            <Label layoutX="536.0" layoutY="55.0" text="Ortstyp" />
-            <ChoiceBox fx:id="locationCategorieField" layoutX="536.0" layoutY="71.0" prefWidth="150.0" />
-            <TableView fx:id="TransactionTable" editable="true" layoutX="55.0" layoutY="109.0" prefHeight="492.0" prefWidth="700.0">
-               <columns>
-
-               </columns></TableView>
-            <Button layoutX="391.0" layoutY="618.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="26.0" prefWidth="163.0" text="Speichern" />
-            <Label layoutX="566.0" layoutY="613.0" text="Status: ------------" />
-            <ProgressBar layoutX="566.0" layoutY="629.0" prefHeight="20.0" prefWidth="163.0" progress="0.0" />
-            <Label layoutX="55.0" layoutY="14.0" text="Transaktion hinzufügen">
+            <Label layoutX="55.0" layoutY="291.0" text="Notizen" />
+            <Label layoutX="57.0" layoutY="111.0" text="Zahlungsart" />
+            <ChoiceBox fx:id="paymentMethodField" layoutX="57.0" layoutY="127.0" prefHeight="26.0" prefWidth="102.0" />
+            <Button layoutX="57.0" layoutY="418.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="26.0" prefWidth="163.0" text="Speichern" />
+            <Label layoutX="56.0" layoutY="14.0" text="Transaktion hinzufügen">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="197.0" layoutY="55.0" text="Kategorie" />
-            <ChoiceBox fx:id="transactionCategorieField" layoutX="197.0" layoutY="71.0" prefWidth="150.0" />
+            <Label layoutX="193.0" layoutY="111.0" text="Kategorie" />
+            <ChoiceBox fx:id="transactionCategorieField" layoutX="193.0" layoutY="127.0" prefHeight="26.0" prefWidth="180.0" />
+            <ComboBox fx:id="tx_receiver" editable="true" layoutX="56.0" layoutY="184.0" prefHeight="26.0" prefWidth="316.0" visibleRowCount="15" />
+            <Label layoutX="56.0" layoutY="168.0" text="Empfänger" />
+            <Spinner fx:id="amount" editable="true" layoutX="226.0" layoutY="246.0" prefHeight="26.0" prefWidth="142.0" />
+            <Label layoutX="226.0" layoutY="230.0" text="Betrag" />
+            <TextArea layoutX="56.0" layoutY="307.0" prefHeight="85.0" prefWidth="316.0" />
+            <TextField fx:id="tx_newPaymentMethod" layoutX="631.0" layoutY="163.0" />
+            <Label layoutX="631.0" layoutY="145.0" text="Zahlungsart hinzufügen" />
+            <Button layoutX="700.0" layoutY="197.0" mnemonicParsing="false" onAction="#saveNewPaymentMethod" prefHeight="26.0" prefWidth="102.0" text="Speichern" />
+            <TextField fx:id="tx_newCategory" layoutX="631.0" layoutY="256.0" />
+            <Label layoutX="631.0" layoutY="238.0" text="Kategorie hinzufügen" />
+            <Button layoutX="700.0" layoutY="290.0" mnemonicParsing="false" onAction="#saveNewCategory" prefHeight="26.0" prefWidth="102.0" text="Speichern" />
+            <RadioButton fx:id="radioMoneyIncome" layoutX="53.0" layoutY="230.0" mnemonicParsing="false" text="Ist Geld Eingang" />
+            <RadioButton fx:id="radioMoneyOutcome" layoutX="53.0" layoutY="260.0" mnemonicParsing="false" text="Ist Geld Ausgang" />
          </children>
       </AnchorPane>
       <MenuBar prefHeight="29.0" prefWidth="1250.0">

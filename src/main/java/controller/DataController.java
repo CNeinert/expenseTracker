@@ -34,45 +34,32 @@ public class DataController {
         connect();
 
         TableUtils.createTableIfNotExists( getConnectionSource(), Transaction.class );
-        TableUtils.createTableIfNotExists( getConnectionSource(), Product.class );
-        TableUtils.createTableIfNotExists( getConnectionSource(), JoinTransactionProduct.class );
-        TableUtils.createTableIfNotExists( getConnectionSource(), Location.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), PaymentMethod.class );
+        TableUtils.createTableIfNotExists( getConnectionSource(), Receiver.class );
         TableUtils.createTableIfNotExists( getConnectionSource(), TransactionCategory.class );
-        TableUtils.createTableIfNotExists( getConnectionSource(), LocationCategory.class );
+
 
         var test = (TransactionCategory) selectById(TransactionCategory.class, 1L);
         //create the standard Categories only once
         if (test == null){
             //TODO: provide translation
-            String[] standardCategories = {"Miete", "Nebenkosten", "Strom/Wasser/Gas", "Telefon/Internet/Mobil/TV",
-                    "Rundfunkgebühr", "Abonnement", "Versicherung", "Sparen/Investieren", "KFZ", "Mobilität/ÖPNV",
-                    "Taschengeld", "Schuldentilgung", "Sonstiges"};
-            String[] standardIncomeCategories = { "Lohn/Gehalt", "ALG I / II", "Wohngeld", "Kindergeld", "Unterhaltszahlung",
-                    "Rente", "Pflegegeld", "Dividenden", "Sonstiges"};
-            String[] standardLocationCategories = {"Supermarkt", "Drogerie", "Baumarkt", "Online", "Imbis/Restaurant", "Apotheke"};
 
+            String[] standardIncomeCategories = { "Lohn/Gehalt", "Kindergeld / Unterhalt", "Rente / Pflegegeld",
+                    "Kapitalmarkt", "Sonstiges"};
 
-            for (int i = 0; i < standardCategories.length; i++) {
-                TransactionCategory transactionCategory = new TransactionCategory();
-                transactionCategory.setCategory_id(i+1);
-                transactionCategory.setCategory(standardCategories[i]);
-                transactionCategory.setIncome(false);
-                this.persist(transactionCategory);
-            }
+            String[] standardCategories = {"", "Miete", "Nebenkosten", "Strom/Wasser/Gas", "Telefon/Internet/Mobil/TV",
+                    "Rundfunkgebühr", "Abonnement", "Versicherung","Nahrungsmittel","Drogerie", "Gesundheit",
+                    "Sparen/Investieren", "KFZ", "Mobilität/ÖPNV", "Geschenke", "Mittag (Arbeit)", "Bäcker","Süßkram",
+                    "Schreibwaren / Büro", "Friseur", "Technik", "Sport", "Reparaturen","Taschengeld", "Schuldentilgung",
+                    "Sonstiges"};
+
             for (int i = 0; i < standardIncomeCategories.length; i++) {
-                TransactionCategory transactionIncCategory = new TransactionCategory();
-                transactionIncCategory.setCategory_id(i+1);
-                transactionIncCategory.setCategory(standardIncomeCategories[i]);
-                transactionIncCategory.setIncome(true);
+                TransactionCategory transactionIncCategory = new TransactionCategory(standardIncomeCategories[i]);
                 this.persist(transactionIncCategory);
             }
-
-
-            for (int i = 0; i < standardLocationCategories.length; i++) {
-                LocationCategory lc = new LocationCategory();
-                lc.setCategory_id(i+1);
-                lc.setLocationCategory(standardLocationCategories[i]);
-                this.persist(lc);
+            for (int i = 0; i < standardCategories.length; i++) {
+                TransactionCategory transactionCategory = new TransactionCategory(standardCategories[i]);
+                this.persist(transactionCategory);
             }
             System.out.println(" - New categories added! - ");
         }else{

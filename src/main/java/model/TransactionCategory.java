@@ -12,15 +12,12 @@ public class TransactionCategory {
     @DatabaseField
     private String category;
 
-    @DatabaseField
-    private Boolean income; //Category for Transactions, Stocks or other
 
-    @ForeignCollectionField(eager = true)
-    java.util.Collection<Transaction> transactions;
-
-    public TransactionCategory() {
-
+    public TransactionCategory(String category) {
+        this.setCategory(category);
     }
+
+    public TransactionCategory(){}
 
     public int getCategory_id() {
         return category_id;
@@ -39,11 +36,4 @@ public class TransactionCategory {
         this.category = category;
     }
 
-    public Boolean isIncome() {
-        return income;
-    }
-
-    public void setIncome(Boolean income) {
-        this.income = income;
-    }
 }
