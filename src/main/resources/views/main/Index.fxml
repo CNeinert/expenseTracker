@@ -73,6 +73,7 @@
         </menus>
       </MenuBar>
       <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
-      <Button layoutX="57.0" layoutY="192.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" text="Show all Transactions" />
+      <Button disable="false" layoutX="35.0" layoutY="148.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" text="Show all Transactions" />
+      <Button disable="true" layoutX="35.0" layoutY="189.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" text="add new Transactions" />
    </children>
 </AnchorPane>

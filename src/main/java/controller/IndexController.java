@@ -140,8 +140,10 @@ public class IndexController extends AbstractViewController implements Initializ
     @FXML
     private void loadShowAllTransactions() throws IOException {
         try {
-            loadView("AllTransactions");
+            closeButtonAction();
+            loadView("ShowAllTransactions");
         }catch (Exception e){
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
             alert.show();
         }
@@ -334,5 +336,7 @@ public class IndexController extends AbstractViewController implements Initializ
         radioMoneyIncome.setSelected(false);
         txf_notes.setText("");
     }
+
+
 
 }

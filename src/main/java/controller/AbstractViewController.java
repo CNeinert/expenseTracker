@@ -14,11 +14,20 @@ import java.util.ResourceBundle;
 
 public abstract class AbstractViewController {
 
+    @FXML
+    private javafx.scene.control.Button closeButton;
 
+    @FXML
+    public void closeButtonAction(){
+        // get a handle to the stage
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
 
     @FXML
     public void loadView(String view) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/" + view + ".fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main/" + view + ".fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));

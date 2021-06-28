@@ -9,9 +9,12 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class ExpenseTracker extends Application{
+
+    public Stage primaryStage;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        primaryStage.close();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/main/Index.fxml")));
         primaryStage.setTitle("Expense Tracker");
         primaryStage.setMinHeight(700);
