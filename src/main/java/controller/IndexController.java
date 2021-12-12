@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
 import main.java.model.PaymentMethod;
@@ -31,6 +32,9 @@ public class IndexController extends AbstractViewController implements Initializ
 
     @FXML
     Pane MainPane = new Pane();
+
+    @FXML
+    ProgressBar statusbar_001 = new ProgressBar();
 
 
     @FXML
@@ -86,7 +90,7 @@ public class IndexController extends AbstractViewController implements Initializ
         this.radioMoneyOutcome.setToggleGroup(toggleGroup);
         this.radioMoneyOutcome.setSelected(true);
         this.radioMoneyIncome.setToggleGroup(toggleGroup);
-
+        setStatusbar_001(0.75);
         initChoiceBoxes();
         transDate.setOnAction(e  -> {
             LocalDate date = transDate.getValue();
@@ -337,6 +341,8 @@ public class IndexController extends AbstractViewController implements Initializ
         txf_notes.setText("");
     }
 
-
+    public void setStatusbar_001(double value){
+        this.statusbar_001.setProgress(value);
+    }
 
 }
