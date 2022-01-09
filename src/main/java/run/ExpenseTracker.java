@@ -16,10 +16,8 @@ public class ExpenseTracker extends Application{
     public void start(Stage primaryStage) throws Exception {
         primaryStage.close();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("views/main/Index.fxml")));
-        primaryStage.setTitle("Expense Tracker");
-        primaryStage.setMinHeight(700);
-        primaryStage.setMinWidth(1250);
-        Scene scene = new Scene(root, 1250, 700);
+
+        Scene scene = new Scene(root);
         scene.getStylesheets().add("css/base.css");
         primaryStage.setScene(scene);
         primaryStage.show();

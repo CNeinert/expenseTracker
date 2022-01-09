@@ -9,8 +9,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import main.java.model.PaymentMethod;
 import main.java.model.Receiver;
@@ -144,8 +144,19 @@ public class IndexController extends AbstractViewController implements Initializ
     @FXML
     private void loadShowAllTransactions() throws IOException {
         try {
-            closeButtonAction();
-            loadView("ShowAllTransactions");
+            loadView("ShowAllTransactions", getStage());
+        }catch (Exception e){
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
+            alert.show();
+        }
+
+    }
+
+    @FXML
+    private void loadBudget() throws IOException {
+        try {
+            loadView("BudgetOverview", getStage());
         }catch (Exception e){
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
@@ -291,11 +302,7 @@ public class IndexController extends AbstractViewController implements Initializ
             }
             transaction.setReceiver((Receiver) receiver);
             transaction.setAmount(amount.getValue());
-            if (toggleGroup.getSelectedToggle().toString().equals("radioMoneyIncome")){
-                transaction.setCorrectValue(true);
-            }else{
-                transaction.setCorrectValue(false);
-            }
+            transaction.setCorrectValue(toggleGroup.getSelectedToggle().toString().equals("radioMoneyIncome"));
             transaction.setNotes(txf_notes.getText());
             dc.persist(transaction);
 
@@ -318,7 +325,7 @@ public class IndexController extends AbstractViewController implements Initializ
         dc.persist(newPayment);
         initChoiceBoxes();
         Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "New Pament Method: '" +newPayment.getPaymentMethod().toString()+"' created");
+                "New Pament Method: '" +tx_newPaymentMethod.getText()+"' created");
         alert.show();
     }
 
@@ -344,5 +351,10 @@ public class IndexController extends AbstractViewController implements Initializ
     public void setStatusbar_001(double value){
         this.statusbar_001.setProgress(value);
     }
+
+    public Stage getStage(){
+        return (Stage) this.transDate.getScene().getWindow();
+    }
+
 
 }

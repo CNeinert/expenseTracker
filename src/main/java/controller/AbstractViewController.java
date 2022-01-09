@@ -10,28 +10,49 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public abstract class AbstractViewController {
 
     @FXML
-    private javafx.scene.control.Button closeButton;
+    public javafx.scene.control.Button closeButton;
 
     @FXML
-    public void closeButtonAction(){
-        // get a handle to the stage
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        // do what you have to do
-        stage.close();
-    }
+    public Stage stage;
+
 
     @FXML
-    public void loadView(String view) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/main/" + view + ".fxml"));
+    public void loadView(String view, Stage stage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("/views/main/" + view + ".fxml")));
         Parent root = loader.load();
-        Stage stage = new Stage();
+        //Stage stage = stage;
+        //stage.setScene(new Scene(root));
+        //stage.setTitle(view);
+        //stage.show();
+        System.out.println("Stage:" + getStage());
+        System.out.println("Stage:" + this.stage);
         stage.setScene(new Scene(root));
-        stage.setTitle(view);
-        stage.show();
     }
+
+    public abstract Stage getStage();
+
+//    @FXML
+//    private void handleButtonAction (ActionEvent event) throws Exception {
+//        Stage stage;
+//        Parent root;
+//        var btn1;
+//
+//        if(event.getSource()==btn1){
+//            stage = (Stage) btn1.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("FXML2.fxml"));
+//        }
+//        else{
+//            stage = (Stage) btn2.getScene().getWindow();
+//            root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+//        }
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
+//    }
 }
