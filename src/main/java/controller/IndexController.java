@@ -1,13 +1,11 @@
 package main.java.controller;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -17,7 +15,6 @@ import main.java.model.Receiver;
 import main.java.model.Transaction;
 import main.java.model.TransactionCategory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -81,26 +78,22 @@ public class IndexController extends AbstractViewController implements Initializ
      */
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("INITIALIZE! Index View");
-
-        // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
-        // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
-        //initTableCols();
+        initChoiceBoxes();
 
         this.radioMoneyOutcome.setToggleGroup(toggleGroup);
         this.radioMoneyOutcome.setSelected(true);
         this.radioMoneyIncome.setToggleGroup(toggleGroup);
-        setStatusbar_001(0.75);
-        initChoiceBoxes();
+
         transDate.setOnAction(e  -> {
             LocalDate date = transDate.getValue();
             System.err.println("Selected date: " + date);
         });
+
         amount.setEditable(true);
         SpinnerValueFactory<Double> amountValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(Double.MIN_VALUE, Double.MAX_VALUE);
 
         amountValueFactory.setConverter(new StringConverter<Double>() {
-            private final DecimalFormat df = new DecimalFormat("#.##");
+            private final DecimalFormat df = new DecimalFormat("##.##");
 
             @Override
             public String toString(Double aDouble) {
@@ -141,112 +134,6 @@ public class IndexController extends AbstractViewController implements Initializ
         amountValueFactory.setValue(0.01);
     }
 
-    @FXML
-    private void loadShowAllTransactions() throws IOException {
-        try {
-            loadView("ShowAllTransactions", getStage());
-        }catch (Exception e){
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
-            alert.show();
-        }
-
-    }
-
-    @FXML
-    private void loadBudget() throws IOException {
-        try {
-            loadView("BudgetOverview", getStage());
-        }catch (Exception e){
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load!");
-            alert.show();
-        }
-
-    }
-
-    public void showOverview() {
-
-    }
-
-    //TODO Make DRY!! or delete
-    /*
-    public void initTableCols() {
-
-        productObservableList.add(new Product());
-        TransactionTable.setEditable(true);
-        TableColumn product_name_col = new TableColumn("Produktbezeichnung");
-        product_name_col.setMinWidth(300);
-        product_name_col.setEditable(true);
-        product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
-        product_name_col.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
-        product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Product product = (Product) event.getRowValue();
-                product.setProductName(event.getNewValue().toString());
-                productObservableList.add(new Product());
-            }
-        });
-
-        TableColumn single_price_col = new TableColumn("Einzelpreis");
-        single_price_col.setMinWidth(100);
-        single_price_col.setEditable(true);
-        single_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        single_price_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("single_price"));
-        single_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent cellEditEvent) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setSingle_price((Double) cellEditEvent.getNewValue());
-            }
-        });
-
-
-        TableColumn amount_col = new TableColumn("Menge");
-        amount_col.setMinWidth(100);
-        amount_col.setEditable(true);
-        amount_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        amount_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("amount"));
-        amount_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent cellEditEvent) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setAmount((Double) cellEditEvent.getNewValue());
-                TransactionTable.refresh();
-            }
-        });
-
-
-        TableColumn notes_col = new TableColumn("Notizen");
-        notes_col.setMinWidth(200);
-        notes_col.setEditable(true);
-        notes_col.setCellFactory(TextFieldTableCell.forTableColumn()); //TODO Handle Exeption
-        notes_col.setCellValueFactory(new PropertyValueFactory<Product, String>("notes"));
-        notes_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setNotes(event.getNewValue().toString());
-                TransactionTable.refresh();
-            }
-        });
-
-
-
-
-        TransactionTable.setItems(productObservableList);
-        //TransactionTable.getColumns().removeAll();
-
-        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,notes_col );
-        TransactionTable.getRowFactory();
-        System.out.println("Init Table");
-    }
-    */
-
-    private void changeMouse(final Cursor cursor) {
-        Platform.runLater(() -> MainPane.setCursor(cursor));
-    }
 
     private void initChoiceBoxes(){
         ObservableList<String> olTransCategory = FXCollections.observableArrayList();
@@ -278,34 +165,38 @@ public class IndexController extends AbstractViewController implements Initializ
 
     }
 
-    public void saveNewTransaction(){
+    private void saveNewTransaction(){
         System.out.print("Saving...");
 
         try {
+            setStatusbar_001(0.0);
             DataController dc = new DataController();
             Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-
+            setStatusbar_001(0.2);
             var paymentMethods = dc.findByIdentifier(PaymentMethod.class, "paymentMethod", paymentMethodField.getValue().toString());
             System.out.println(paymentMethods);
             var category = dc.findByIdentifier(TransactionCategory.class, "category", transactionCategorieField.getValue().toString());
             var receiver = dc.findByIdentifier(Receiver.class, "receiverName", tx_receiver.getValue().toString());
-
+            setStatusbar_001(0.4);
 
             Transaction transaction = new Transaction();
             transaction.setDate(date);
             transaction.setPaymentMethod((PaymentMethod) paymentMethods);
             transaction.setTransactionCategory((TransactionCategory) category);
+            setStatusbar_001(0.6);
             if (receiver == null){
                 Receiver newreceiver = new Receiver(tx_receiver.getValue().toString());
                 dc.persist(newreceiver);
                 receiver = newreceiver;
             }
+
             transaction.setReceiver((Receiver) receiver);
             transaction.setAmount(amount.getValue());
             transaction.setCorrectValue(toggleGroup.getSelectedToggle().toString().equals("radioMoneyIncome"));
             transaction.setNotes(txf_notes.getText());
+            setStatusbar_001(0.8);
             dc.persist(transaction);
-
+            setStatusbar_001(1.0);
             System.out.println("done.");
             resetView();
         }catch (Exception e){
@@ -318,7 +209,7 @@ public class IndexController extends AbstractViewController implements Initializ
 
     }
 
-    public void saveNewPaymentMethod(){
+    private void saveNewPaymentMethod(){
         DataController dc = new DataController();
         PaymentMethod newPayment = new PaymentMethod();
         newPayment.setPaymentMethod(tx_newPaymentMethod.getText());
@@ -329,7 +220,7 @@ public class IndexController extends AbstractViewController implements Initializ
         alert.show();
     }
 
-    public void saveNewCategory(){
+    private void saveNewCategory(){
         DataController dc = new DataController();
         TransactionCategory newCategory = new TransactionCategory();
         newCategory.setCategory(tx_newCategory.getText());
@@ -346,9 +237,10 @@ public class IndexController extends AbstractViewController implements Initializ
         radioMoneyOutcome.setSelected(true);
         radioMoneyIncome.setSelected(false);
         txf_notes.setText("");
+        setStatusbar_001(0.0);
     }
 
-    public void setStatusbar_001(double value){
+    private void setStatusbar_001(double value){
         this.statusbar_001.setProgress(value);
     }
 

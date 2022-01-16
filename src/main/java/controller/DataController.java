@@ -6,6 +6,8 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
+import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import main.java.model.*;
 
 import java.io.IOException;
@@ -89,7 +91,7 @@ public class DataController {
     public void close(){
         try {
             connectionSource.close();
-        } catch (IOException ioException) {
+        } catch (Exception ioException) {
             ioException.printStackTrace();
         }
     }

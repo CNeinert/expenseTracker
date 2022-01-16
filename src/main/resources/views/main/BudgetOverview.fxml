@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.ShowAllTransactions">
+<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.BudgetOverviewController">
 <children>
     <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="672.0" prefWidth="893.0">
         <children>
@@ -24,13 +24,13 @@
             <ProgressBar layoutX="126.0" layoutY="126.0" prefHeight="20.0" prefWidth="222.0" progress="0.3" />
             <Label layoutX="56.0" layoutY="128.0" text="Category" />
             <Label layoutX="363.0" layoutY="128.0" text="30%" />
-            <ScrollBar layoutX="56.0" layoutY="91.0" prefHeight="15.0" prefWidth="332.0" value="100.0" />
+            <ScrollBar layoutX="56.0" layoutY="91.0" prefHeight="15.0" prefWidth="332.0" value="100.0" fx:id="scrollBarMonth" />
             <Label layoutX="56.0" layoutY="51.0" prefHeight="40.0" prefWidth="332.0" text="Monat" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ProgressBar layoutX="126.0" layoutY="152.0" prefHeight="20.0" prefWidth="222.0" progress="0.95" style="-fx-accent: red;" />
+            <ProgressBar fx:id="progress01" layoutX="126.0" layoutY="152.0" prefHeight="20.0" prefWidth="222.0" progress="0.95" style="-fx-accent: red;" />
             <Label layoutX="56.0" layoutY="154.0" text="Category" />
             <Label layoutX="363.0" layoutY="154.0" text="95%" />
         </children>
@@ -59,8 +59,8 @@
         </menus>
     </MenuBar>
     <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
-    <Button layoutX="35.0" layoutY="148.0" mnemonicParsing="false" text="Show all Transactions" />
+    <Button layoutX="35.0" layoutY="148.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" text="Show all Transactions" />
     <Button layoutX="35.0" layoutY="189.0" mnemonicParsing="false" onAction="#loadIndex" text="add new Transactions" />
-      <Button disable="true" layoutX="35.0" layoutY="230.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" text="Budget" />
+    <Button disable="true" layoutX="35.0" layoutY="230.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="160.0" text="Budget" />
 </children>
 </AnchorPane>
