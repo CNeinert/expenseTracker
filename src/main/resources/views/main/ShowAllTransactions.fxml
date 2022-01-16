@@ -7,12 +7,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.ShowAllTransactions">
+<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.ShowAllTransactions">
 <children>
     <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="672.0" prefWidth="893.0">
         <children>
@@ -21,12 +20,7 @@
                     <Font size="24.0" />
                 </font>
             </Label>
-            <TreeTableView fx:id="tbl_showAllTransactions" layoutX="14.0" layoutY="75.0" prefHeight="586.0" prefWidth="865.0">
-              <columns>
-                <TreeTableColumn prefWidth="75.0" text="C1" />
-                <TreeTableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TreeTableView>
+            <TableView fx:id="allTransactionsTable" layoutX="25.0" layoutY="76.0" prefHeight="556.0" prefWidth="778.0" />
         </children>
     </AnchorPane>
     <MenuBar prefHeight="29.0" prefWidth="1250.0">
