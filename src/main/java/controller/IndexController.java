@@ -165,7 +165,7 @@ public class IndexController extends AbstractViewController implements Initializ
 
     }
 
-    private void saveNewTransaction(){
+    public void saveNewTransaction(){
         System.out.print("Saving...");
 
         try {
@@ -209,7 +209,7 @@ public class IndexController extends AbstractViewController implements Initializ
 
     }
 
-    private void saveNewPaymentMethod(){
+    public void saveNewPaymentMethod(){
         DataController dc = new DataController();
         PaymentMethod newPayment = new PaymentMethod();
         newPayment.setPaymentMethod(tx_newPaymentMethod.getText());
@@ -220,7 +220,7 @@ public class IndexController extends AbstractViewController implements Initializ
         alert.show();
     }
 
-    private void saveNewCategory(){
+    public void saveNewCategory(){
         DataController dc = new DataController();
         TransactionCategory newCategory = new TransactionCategory();
         newCategory.setCategory(tx_newCategory.getText());
