@@ -14,12 +14,34 @@ import main.java.model.Transaction;
 
 import java.net.URL;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowAllTransactions extends AbstractViewController implements Initializable {
 
     @FXML
     TableView allTransactionsTable;
+
+    @FXML
+    TableColumn ttc_Id = new TableColumn("ID");
+
+    @FXML
+    TableColumn ttc_Date = new TableColumn("Date");
+
+    @FXML
+    TableColumn ttc_paymentMethod = new TableColumn("payment method");
+
+    @FXML
+    TableColumn ttc_receiver = new TableColumn("Receiver");
+
+    @FXML
+    TableColumn ttc_category = new TableColumn("Category");
+
+    @FXML
+    TableColumn ttc_amount = new TableColumn("Amount");
+
+    @FXML
+    TableColumn ttc_notes = new TableColumn("Notes");
 
     @FXML
     Label lblTitle;
@@ -43,21 +65,29 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
     
     public void initTableCols() {
 
+        //get Data from DB
+        final ObservableList<Object> allTransactions =  new  DataController().selectAll(Transaction.class);
+
         ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
         transactionObservableList.add(new Transaction());
 
 
-        TableColumn transaction_name_col = new TableColumn("Date");
-        transaction_name_col.setMinWidth(300);
-        transaction_name_col.setEditable(true);
-        transaction_name_col.setVisible(true);
-        transaction_name_col.setCellValueFactory(new PropertyValueFactory<Transaction, Date>("Date"));
-        transaction_name_col.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Transaction, Date>>) event -> {
-            Transaction transaction = (Transaction) event.getRowValue();
-            transaction.setDate((Date) event.getNewValue());
+        prepareColumn(ttc_Id, "transaction_id");
+        prepareColumn(ttc_Date, "date");
+        prepareColumn(ttc_paymentMethod, "paymentMethod");
+        prepareColumn(ttc_receiver, "receiver");
+        prepareColumn(ttc_category, "transactionCategory");
+        prepareColumn(ttc_amount, "amount");
+        prepareColumn(ttc_notes, "notes");
+
+        ttc_Date.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Transaction, Date>>) event -> {
+            Transaction transaction = event.getRowValue();
+            transaction.setDate(event.getNewValue());
             transactionObservableList.add(new Transaction());
         });
-        allTransactionsTable.getColumns().addAll(transaction_name_col);
+
+        allTransactionsTable.getColumns().addAll(ttc_Id, ttc_Date, ttc_paymentMethod, ttc_receiver, ttc_category, ttc_amount, ttc_notes );
+        allTransactionsTable.setItems(allTransactions);
         allTransactionsTable.setVisible(true);
 //
 //
@@ -96,5 +126,12 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
 
         System.out.println("Init Table");
     }
-    
+
+    private void prepareColumn(TableColumn tc, String field){
+        tc.setMinWidth(300);
+        tc.setEditable(true);
+        tc.setVisible(true);
+        tc.setCellValueFactory(new PropertyValueFactory<>(field));
+    }
+
 }

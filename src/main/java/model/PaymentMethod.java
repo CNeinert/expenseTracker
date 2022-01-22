@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class PaymentMethod {
+public class PaymentMethod implements Persistable {
 
     @DatabaseField( generatedId = true )
     private int paymentMethodId;
@@ -34,5 +34,16 @@ public class PaymentMethod {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+
+    @Override
+    public Boolean isEmpty() {
+        return this.getPaymentMethod().isEmpty();
+    }
+
+    @Override
+    public Class<?> getThisClass() {
+        return this.getClass();
     }
 }

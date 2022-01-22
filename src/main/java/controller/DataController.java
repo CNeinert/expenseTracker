@@ -6,11 +6,10 @@ import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.jdbc.db.SqliteDatabaseType;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import main.java.model.*;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -55,12 +54,12 @@ public class DataController {
                     "Schreibwaren / Büro", "Friseur", "Technik", "Sport", "Reparaturen","Taschengeld", "Schuldentilgung",
                     "Sonstiges"};
 
-            for (int i = 0; i < standardIncomeCategories.length; i++) {
-                TransactionCategory transactionIncCategory = new TransactionCategory(standardIncomeCategories[i]);
+            for (String standardIncomeCategory : standardIncomeCategories) {
+                TransactionCategory transactionIncCategory = new TransactionCategory(standardIncomeCategory);
                 this.persist(transactionIncCategory);
             }
-            for (int i = 0; i < standardCategories.length; i++) {
-                TransactionCategory transactionCategory = new TransactionCategory(standardCategories[i]);
+            for (String standardCategory : standardCategories) {
+                TransactionCategory transactionCategory = new TransactionCategory(standardCategory);
                 this.persist(transactionCategory);
             }
             System.out.println(" - New categories added! - ");
@@ -97,11 +96,13 @@ public class DataController {
     }
 
 
-    public void persist(Object object){
+    public void persist(Persistable object){
         try {
             // Database Access Object (DAO) for the Contact class
-            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), (Class<Object>) object.getClass());
-            dao.createIfNotExists(object);
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), (Class<Object>) object.getThisClass());
+            if (!object.isEmpty()){
+                dao.createIfNotExists(object);
+            }
             //close connection
             close();
         }
@@ -110,10 +111,10 @@ public class DataController {
         }
     }
 
-    public Object selectById(Class classObject , Long id){
+    public Object selectById(Class<?> classObject , Long id){
         try {
             // Database Access Object (DAO) for the Contact class
-            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), (Class<Object>) classObject);
             Object object = dao.queryForId( id.toString() );
             //close connection
             close();
@@ -125,14 +126,16 @@ public class DataController {
         }
     }
 
-    public List<Object> selectAll(Class classObject){
+    public ObservableList<Object> selectAll(Class classObject){
         try {
             // Database Access Object (DAO) for the Contact class
             Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );
-            List<Object> list = dao.queryForAll();
+
+            ObservableList<Object> observableList = FXCollections.observableArrayList(dao.queryForAll());
+
             //close connection
             close();
-            return list;
+            return observableList;
         }
         catch (SQLException e ) {
             e.printStackTrace();

@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable
-public class Transaction {
+public class Transaction implements Persistable {
 
     @DatabaseField( generatedId = true )
     private int transaction_id;
@@ -107,5 +107,15 @@ public class Transaction {
                 this.setAmount(this.getAmount()*(-1));
             }
         }
+    }
+
+    @Override
+    public Boolean isEmpty() {
+        return this.getPaymentMethod().isEmpty() || this.getTransactionCategory().isEmpty() || this.getReceiver().isEmpty();
+    }
+
+    @Override
+    public Class<?> getThisClass() {
+        return  this.getClass();
     }
 }
