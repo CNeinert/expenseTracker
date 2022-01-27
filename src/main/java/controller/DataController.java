@@ -101,7 +101,7 @@ public class DataController {
             // Database Access Object (DAO) for the Contact class
             Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), (Class<Object>) object.getThisClass());
             if (!object.isEmpty()){
-                dao.createIfNotExists(object);
+                dao.createOrUpdate(object);
             }
             //close connection
             close();
