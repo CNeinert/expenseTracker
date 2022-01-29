@@ -21,10 +21,7 @@ import java.text.ParseException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class IndexController extends AbstractViewController implements Initializable {
@@ -242,10 +239,8 @@ public class IndexController extends AbstractViewController implements Initializ
             System.out.println("done.");
             resetView();
         }catch (Exception e){
-            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to save transaction");
-            alert.show();
+            AlertHandler.showErrorAlert("Failed to save transaction");
             e.printStackTrace();
-            System.out.println("---- FAILED! ----");
         }
 
 
@@ -257,9 +252,8 @@ public class IndexController extends AbstractViewController implements Initializ
         newPayment.setPaymentMethod(tx_newPaymentMethod.getText());
         dc.persist(newPayment);
         initChoiceBoxes();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "New Pament Method: '" +tx_newPaymentMethod.getText()+"' created");
-        alert.show();
+
+        AlertHandler.showInfoAlert("New Pament Method: '" +tx_newPaymentMethod.getText()+"' created");
     }
 
     public void saveNewCategory(){
@@ -267,9 +261,7 @@ public class IndexController extends AbstractViewController implements Initializ
         newCategory.setCategory(tx_newCategory.getText());
         dc.persist(newCategory);
         initChoiceBoxes();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,
-                "New Category: '"+newCategory.getCategory().toString()+"' created");
-        alert.show();
+        AlertHandler.showInfoAlert("New Category: '"+ newCategory.getCategory() +"' created");
     }
 
     public void resetView(){
@@ -287,7 +279,6 @@ public class IndexController extends AbstractViewController implements Initializ
 
     public void loadTransaction(){
         int transactionId = tx_loadTransaction.getValue();
-        System.out.println(transactionId);
 
         try{
             Transaction transaction = (Transaction) dc.findByIdentifier(Transaction.class, "transaction_id", String.valueOf(transactionId));
@@ -298,9 +289,24 @@ public class IndexController extends AbstractViewController implements Initializ
             amountValueFactory.setValue(transaction.getAmount());
             txf_notes.setText(transaction.getNotes());
         }catch (Exception exception){
-            Alert alert = new Alert(Alert.AlertType.ERROR,  "Failed to load transaction. Try different ID.");
-            alert.show();
+            AlertHandler.showErrorAlert("Failed to load transaction. Try different ID.");
             exception.printStackTrace();
+        }
+
+
+    }
+
+    public void deleteTransaction(){
+        int transactionId = tx_loadTransaction.getValue();
+
+        boolean choice = AlertHandler.getChoiceOfChoiceBox("Wirklich löschen?");
+
+        if (choice){
+            if (dc.deleteById(transactionId) > 0){
+                AlertHandler.showInfoAlert("Successfully deleted Transaction with the ID: " + transactionId);
+            }else {
+                AlertHandler.showErrorAlert("Failed to delete Transaction with the ID: " + transactionId);
+            }
         }
 
 
@@ -362,6 +368,8 @@ public class IndexController extends AbstractViewController implements Initializ
 
         return generatedString;
     }
+
+
 
 
 }

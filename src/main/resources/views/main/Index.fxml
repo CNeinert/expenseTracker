@@ -48,6 +48,7 @@
             <Label layoutX="53.0" layoutY="499.0" text="Transaktions ID" />
             <Button layoutX="122.0" layoutY="551.0" mnemonicParsing="false" onAction="#loadTransaction" prefHeight="32.0" prefWidth="102.0" text="Laden" />
             <Button layoutX="198.0" layoutY="609.0" mnemonicParsing="false" onAction="#generate" text="Generate" />
+            <Button layoutX="14.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="32.0" prefWidth="102.0" text="Löschen" />
          </children>
       </AnchorPane>
       <MenuBar prefHeight="29.0" prefWidth="1250.0">

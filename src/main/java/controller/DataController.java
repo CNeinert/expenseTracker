@@ -177,6 +177,21 @@ public class DataController {
         return null;
     }
 
+    public int deleteById(int id){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Transaction, String> dao = DaoManager.createDao( getConnectionSource(), Transaction.class);
+            int deleteResult = dao.deleteById(String.valueOf(id));
+            //close connection
+            close();
+            return deleteResult;
+        }
+        catch (SQLException e ) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     //Getter and Setter
     public String getUrl() {
         return url;
