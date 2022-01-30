@@ -16,8 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.ProgressBar?>
-<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.IndexController">
+<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.IndexController">
    <children>
       <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="672.0" prefWidth="893.0">
          <children>
@@ -26,7 +25,7 @@
             <Label layoutX="55.0" layoutY="291.0" text="Notizen" />
             <Label layoutX="57.0" layoutY="111.0" text="Zahlungsmethode" />
             <ChoiceBox fx:id="paymentMethodField" layoutX="57.0" layoutY="127.0" prefHeight="26.0" prefWidth="102.0" />
-            <Button layoutX="57.0" layoutY="418.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="40.0" prefWidth="163.0" text="Speichern" />
+            <Button fx:id="saveButton" layoutX="57.0" layoutY="418.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="40.0" prefWidth="163.0" text="Speichern" />
             <Label layoutX="56.0" layoutY="14.0" text="Transaktion hinzufügen">
                <font>
                   <Font size="24.0" />
@@ -45,7 +44,11 @@
             <TextField fx:id="tx_newCategory" layoutX="631.0" layoutY="256.0" />
             <Label layoutX="631.0" layoutY="238.0" text="Kategorie hinzufügen" />
             <Button layoutX="700.0" layoutY="290.0" mnemonicParsing="false" onAction="#saveNewCategory" prefHeight="32.0" prefWidth="102.0" text="Speichern" />
-            <ProgressBar fx:id="statusbar_001" layoutX="43.0" layoutY="532.0" prefHeight="18.0" prefWidth="310.0" progress="0.0" />
+            <Spinner fx:id="tx_loadTransaction" editable="true" layoutX="53.0" layoutY="517.0" prefHeight="26.0" prefWidth="142.0" />
+            <Label layoutX="53.0" layoutY="499.0" text="Transaktions ID" />
+            <Button layoutX="122.0" layoutY="551.0" mnemonicParsing="false" onAction="#loadTransaction" prefHeight="32.0" prefWidth="102.0" text="Laden" />
+            <Button layoutX="198.0" layoutY="609.0" mnemonicParsing="false" onAction="#generate" text="Generate" />
+            <Button layoutX="14.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="32.0" prefWidth="102.0" text="Löschen" />
          </children>
       </AnchorPane>
       <MenuBar prefHeight="29.0" prefWidth="1250.0">

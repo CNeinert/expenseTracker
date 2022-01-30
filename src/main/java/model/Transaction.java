@@ -4,10 +4,11 @@ package main.java.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @DatabaseTable
-public class Transaction {
+public class Transaction implements Persistable {
 
     @DatabaseField( generatedId = true )
     private int transaction_id;
@@ -35,7 +36,6 @@ public class Transaction {
         this.setDate(date);
 
     }
-
 
     public Transaction(){}
 
@@ -107,5 +107,40 @@ public class Transaction {
                 this.setAmount(this.getAmount()*(-1));
             }
         }
+    }
+
+    @Override
+    public Boolean isEmpty() {
+        return this.getPaymentMethod().isEmpty() || this.getTransactionCategory().isEmpty() || this.getReceiver().isEmpty();
+    }
+
+    @Override
+    public Class<?> getThisClass() {
+        return  this.getClass();
+    }
+
+    private String paymentMethodWrapper;
+
+    private String receiverWrapper;
+
+    private String categoryWrapper;
+
+    private String formatedDate;
+
+    public String getPaymentMethodWrapper() {
+        return this.getPaymentMethod().getPaymentMethod();
+    }
+
+    public String getReceiverWrapper(){
+        return this.getReceiver().getReceiverName();
+    }
+
+    public String getCategoryWrapper(){
+        return this.getTransactionCategory().getCategory();
+    }
+
+    public String getFormatedDate(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        return sdf.format(this.date);
     }
 }

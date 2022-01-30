@@ -1,30 +1,60 @@
 package main.java.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import main.java.model.PaymentMethod;
+import main.java.model.Transaction;
 
 import java.net.URL;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowAllTransactions extends AbstractViewController implements Initializable {
 
     @FXML
-    TreeTableView tbl_showAllTransactions;
+    TableView allTransactionsTable;
+
+    @FXML
+    TableColumn ttc_Id = new TableColumn("ID");
+
+    @FXML
+    TableColumn ttc_Date = new TableColumn("Date");
+
+    @FXML
+    TableColumn ttc_paymentMethod = new TableColumn("payment method");
+
+    @FXML
+    TableColumn ttc_receiver = new TableColumn("Receiver");
+
+    @FXML
+    TableColumn ttc_category = new TableColumn("Category");
+
+    @FXML
+    TableColumn ttc_amount = new TableColumn("Amount");
+
+    @FXML
+    TableColumn ttc_notes = new TableColumn("Notes");
 
     @FXML
     Label lblTitle;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.tbl_showAllTransactions = new TreeTableView();
 
-        // programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
-        // programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
-        //initTableCols();
+
+        //programName.setCellValueFactory(new PropertyValueFactory<>("Program Name"));
+        //programVersion.setCellValueFactory(new PropertyValueFactory<>("Version"));
+        initTableCols();
     }
 
 
@@ -34,77 +64,45 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
     }
 
     //TODO Make DRY!! or delete
-    /*
+    
     public void initTableCols() {
 
-        productObservableList.add(new Product());
-        TransactionTable.setEditable(true);
-        TableColumn product_name_col = new TableColumn("Produktbezeichnung");
-        product_name_col.setMinWidth(300);
-        product_name_col.setEditable(true);
-        product_name_col.setCellFactory(TextFieldTableCell.forTableColumn());
-        product_name_col.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
-        product_name_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Product product = (Product) event.getRowValue();
-                product.setProductName(event.getNewValue().toString());
-                productObservableList.add(new Product());
-            }
-        });
+        //get Data from DB
+        final ObservableList<Object> allTransactions =  new  DataController().selectAll(Transaction.class);
 
-        TableColumn single_price_col = new TableColumn("Einzelpreis");
-        single_price_col.setMinWidth(100);
-        single_price_col.setEditable(true);
-        single_price_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        single_price_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("single_price"));
-        single_price_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent cellEditEvent) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setSingle_price((Double) cellEditEvent.getNewValue());
-            }
-        });
+        ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
+        transactionObservableList.add(new Transaction());
 
 
-        TableColumn amount_col = new TableColumn("Menge");
-        amount_col.setMinWidth(100);
-        amount_col.setEditable(true);
-        amount_col.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));//TODO Handle Exeption
-        amount_col.setCellValueFactory(new PropertyValueFactory<Product, Double>("amount"));
-        amount_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent cellEditEvent) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setAmount((Double) cellEditEvent.getNewValue());
-                TransactionTable.refresh();
-            }
-        });
+        prepareColumn(ttc_Id, "transaction_id");
+        prepareColumn(ttc_Date, "formatedDate");
+        prepareColumn(ttc_paymentMethod, "paymentMethodWrapper");
+        prepareColumn(ttc_receiver, "receiverWrapper");
+        prepareColumn(ttc_category, "categoryWrapper");
+        prepareColumn(ttc_amount, "amount");
+        prepareColumn(ttc_notes, "notes");
 
 
-        TableColumn notes_col = new TableColumn("Notizen");
-        notes_col.setMinWidth(200);
-        notes_col.setEditable(true);
-        notes_col.setCellFactory(TextFieldTableCell.forTableColumn()); //TODO Handle Exeption
-        notes_col.setCellValueFactory(new PropertyValueFactory<Product, String>("notes"));
-        notes_col.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Product, String>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent event) {
-                Product thisProduct = productObservableList.get(productObservableList.size()-2);
-                thisProduct.setNotes(event.getNewValue().toString());
-                TransactionTable.refresh();
-            }
-        });
+        //ttc_Date.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Transaction, Date>>) event -> {
+        //    Transaction transaction = event.getRowValue();
+        //    transaction.setDate(event.getNewValue());
+        //    transactionObservableList.add(new Transaction());
+        //});
 
+        allTransactionsTable.getColumns().addAll(ttc_Id, ttc_Date, ttc_paymentMethod, ttc_receiver, ttc_category, ttc_amount, ttc_notes );
+        allTransactionsTable.setItems(allTransactions);
+        allTransactionsTable.setVisible(true);
 
+        System.out.println(allTransactionsTable.getColumns().size());
 
-
-        TransactionTable.setItems(productObservableList);
-        //TransactionTable.getColumns().removeAll();
-
-        TransactionTable.getColumns().addAll(product_name_col, single_price_col, amount_col,notes_col );
-        TransactionTable.getRowFactory();
         System.out.println("Init Table");
     }
-    */
+
+    private void prepareColumn(TableColumn tc, String field){
+        tc.setMinWidth(125);
+        tc.setEditable(true);
+        tc.setVisible(true);
+        tc.setCellValueFactory(new PropertyValueFactory<>(field));
+    }
+
 }

@@ -4,7 +4,7 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class Receiver {
+public class Receiver implements Persistable{
     @DatabaseField(generatedId = true)
     private int receiverId;
     @DatabaseField
@@ -32,4 +32,13 @@ public class Receiver {
         this.receiverName = receiverName;
     }
 
+    @Override
+    public Boolean isEmpty() {
+        return this.getReceiverName().isEmpty();
+    }
+
+    @Override
+    public Class<?> getThisClass() {
+        return this.getClass();
+    }
 }

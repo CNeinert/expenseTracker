@@ -5,7 +5,7 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable
-public class TransactionCategory {
+public class TransactionCategory implements Persistable {
     @DatabaseField( generatedId = true )
     private int category_id;
 
@@ -36,4 +36,14 @@ public class TransactionCategory {
         this.category = category;
     }
 
+
+    @Override
+    public Boolean isEmpty() {
+        return this.getCategory().isEmpty();
+    }
+
+    @Override
+    public Class<?> getThisClass() {
+        return this.getClass();
+    }
 }
