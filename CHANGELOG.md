@@ -1,5 +1,15 @@
 # CHANGELOG
 
+v0.6.0
+(pre-release)
+
+- Working application
+- Main Features implemented and working
+  - create new transactions
+  - read, save, update and delete transaction on the database
+  - create new payment-methods
+  - create new categories
+
 v0.5.0
 (pre release)
 
