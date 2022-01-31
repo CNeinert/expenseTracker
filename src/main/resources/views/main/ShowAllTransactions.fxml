@@ -47,8 +47,8 @@
         </menus>
     </MenuBar>
     <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
-    <Button disable="true" layoutX="35.0" layoutY="148.0" mnemonicParsing="false" text="Show all Transactions" />
-    <Button layoutX="35.0" layoutY="189.0" mnemonicParsing="false" onAction="#loadIndex" text="add new Transactions" />
-    <Button disable="false" layoutX="35.0" layoutY="230.0" mnemonicParsing="false" onAction="#loadBudget" prefHeight="24.0" prefWidth="160.0" text="Budget" />
+    <Button disable="true" layoutX="27.0" layoutY="134.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" prefHeight="30.0" prefWidth="184.0" text="Zeige alle Transaktionen" />
+    <Button disable="false" layoutX="27.0" layoutY="71.0" mnemonicParsing="false" onAction="#loadIndex" prefHeight="30.0" prefWidth="184.0" text="Transaktion hinzufügen" />
+    <Button disable="false" layoutX="27.0" layoutY="193.0" mnemonicParsing="false" onAction="#loadBudget" prefHeight="30.0" prefWidth="184.0" text="[WIP] Budget Übersicht" />
 </children>
 </AnchorPane>
