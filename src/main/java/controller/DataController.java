@@ -131,7 +131,15 @@ public class DataController {
             // Database Access Object (DAO) for the Contact class
             Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );
 
-            ObservableList<Object> observableList = FXCollections.observableArrayList(dao.queryForAll());
+            // First try -> To slow with 10.000 Datasets
+            //ObservableList<Object> observableList = FXCollections.observableList(dao.queryForAll());
+            // Second try -> To slow with 10.000 Datasets
+            ObservableList<Object> observableList = FXCollections.observableArrayList();
+            for (Object object : dao){
+                observableList.add(object);
+            }
+            // Third try -> querry raw?
+
 
             //close connection
             close();

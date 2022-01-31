@@ -73,7 +73,7 @@ public class IndexController extends AbstractViewController implements Initializ
     private TextArea txf_notes = new TextArea();
 
     SpinnerValueFactory<Double> amountValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(Double.MAX_VALUE*(-1), Double.MAX_VALUE);
-    SpinnerValueFactory<Integer> loadTransactionValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, Integer.MAX_VALUE);
+    SpinnerValueFactory<Integer> loadTransactionValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(-1, Integer.MAX_VALUE);
 
     /*
      * @FXML private TableColumn<Program, String> programName;
@@ -312,62 +312,6 @@ public class IndexController extends AbstractViewController implements Initializ
 
     }
 
-    /**
-     * Only for debugging!!
-     * TODO: Remove on Release!
-     * TODO: Remove "generate" Button on index view!!
-     */
-    public void generate(){
-        DataController dc = new DataController();
-
-        Date date = new Date();
-        PaymentMethod paymentMethods = (PaymentMethod) dc.findByIdentifier(PaymentMethod.class, "paymentMethod", "Visa");
-        TransactionCategory category = (TransactionCategory) dc.findByIdentifier(TransactionCategory.class, "category", "Nahrungsmittel");
-        Receiver receiver = (Receiver) dc.findByIdentifier(Receiver.class, "receiverName", "It was MEE!");
-
-        if (receiver == null){
-            Receiver newreceiver = new Receiver("It was MEE!");
-            dc.persist(newreceiver);
-            receiver = newreceiver;
-        }
-
-        for (int i = 0; i < 10000; i++) {
-            Transaction transaction = new Transaction();
-            transaction.setDate(date);
-            transaction.setTransactionCategory(category);
-            transaction.setPaymentMethod(paymentMethods);
-            transaction.setReceiver(receiver);
-
-            transaction.setAmount(Math.random()*2000);
-            transaction.setNotes(generateRandomString());
-
-            System.out.println(transaction.getTransactionCategory());
-            System.out.println(transaction.getPaymentMethod());
-            System.out.println(transaction.getReceiver());
-
-            dc.persist(transaction);
-
-        }
-    }
-
-    /**
-     * Only for debugging!!
-     * TODO: Remove on Release!
-     */
-    public String generateRandomString() {
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 255;
-        Random random = new Random();
-
-        String generatedString = random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-
-        return generatedString;
-    }
 
 
 
