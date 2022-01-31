@@ -1,5 +1,11 @@
 # CHANGELOG
 
+v0.6.1
+(pre-release)
+- [Bugfix]: Changed Spinner to prevent only updating the first database entry
+- [Bugfix]: Changed method of selecting all rows in the database 
+- [TASK]: reorganized UI 
+
 v0.6.0
 (pre-release)
 
