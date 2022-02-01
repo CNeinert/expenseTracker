@@ -1,4 +1,4 @@
-[![GitHub license](https://img.shields.io/github/license/cneinert/expenseTracker.svg)](https://github.com/cneinert/expenseTracker/blob/main/LICENSE.md)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![GitHub release](https://img.shields.io/github/release/cneinert/expenseTracker.svg)](https://GitHub.com/cneinert/expenseTracker/releases/)
 ![example workflow](https://github.com/cneinert/expenseTracker/actions/workflows/maven.yml/badge.svg)
 
