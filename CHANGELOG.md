@@ -1,5 +1,10 @@
 # CHANGELOG
 
+v0.6.2
+(pre-release)
+- [Licence] changed licence from MIT to GPL-v3.0
+- Updated Readme
+
 v0.6.1
 (pre-release)
 - [Bugfix]: Changed Spinner to prevent only updating the first database entry
