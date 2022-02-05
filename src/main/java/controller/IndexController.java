@@ -91,7 +91,6 @@ public class IndexController extends AbstractViewController implements Initializ
 
         transDate.setOnAction(e  -> {
             LocalDate date = transDate.getValue();
-            System.err.println("Selected date: " + date);
         });
 
         amount.setEditable(true);
@@ -203,14 +202,11 @@ public class IndexController extends AbstractViewController implements Initializ
     }
 
     public void saveNewTransaction(){
-        System.out.print("Saving...");
-
         try {
 
             Date date = Date.from(transDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
 
             var paymentMethods = dc.findByIdentifier(PaymentMethod.class, "paymentMethod", paymentMethodField.getValue().toString());
-            System.out.println(paymentMethods);
             var category = dc.findByIdentifier(TransactionCategory.class, "category", transactionCategorieField.getValue().toString());
             var receiver = dc.findByIdentifier(Receiver.class, "receiverName", tx_receiver.getValue().toString());
 
@@ -236,7 +232,6 @@ public class IndexController extends AbstractViewController implements Initializ
 
             dc.persist(transaction);
 
-            System.out.println("done.");
             resetView();
         }catch (Exception e){
             AlertHandler.showErrorAlert("Failed to save transaction");

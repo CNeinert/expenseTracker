@@ -31,7 +31,7 @@ public abstract class AbstractViewController {
 
 
     @FXML
-    private void loadBudget() throws IOException {
+    public void loadBudget() throws IOException {
         try {
             loadView("BudgetOverview");
         }catch (Exception e){
@@ -43,7 +43,7 @@ public abstract class AbstractViewController {
     }
 
     @FXML
-    private void loadShowAllTransactions() throws IOException {
+    public void loadShowAllTransactions() throws IOException {
         try {
             loadView("ShowAllTransactions");
         }catch (Exception e){

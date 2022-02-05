@@ -93,9 +93,6 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
         allTransactionsTable.setItems(allTransactions);
         allTransactionsTable.setVisible(true);
 
-        System.out.println(allTransactionsTable.getColumns().size());
-
-        System.out.println("Init Table");
     }
 
     private void prepareColumn(TableColumn tc, String field){

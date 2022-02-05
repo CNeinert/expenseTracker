@@ -11,19 +11,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.ShowAllTransactions">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.ShowAllTransactions">
 <children>
-    <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="672.0" prefWidth="1012.0">
+    <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="1029.0" prefWidth="1190.0">
         <children>
             <Label fx:id="lblTitle" layoutX="56.0" layoutY="14.0" text="Transaktionen anzeigen">
                 <font>
                     <Font size="24.0" />
                 </font>
             </Label>
-            <TableView fx:id="allTransactionsTable" layoutX="25.0" layoutY="76.0" prefHeight="556.0" prefWidth="962.0" />
+            <TableView fx:id="allTransactionsTable" layoutX="25.0" layoutY="76.0" prefHeight="926.0" prefWidth="1127.0" />
         </children>
     </AnchorPane>
-    <MenuBar prefHeight="29.0" prefWidth="1250.0">
+    <MenuBar prefHeight="29.0" prefWidth="1920.0">
         <menus>
             <Menu mnemonicParsing="false" text="File">
                 <items>
@@ -46,9 +46,9 @@
             </Menu>
         </menus>
     </MenuBar>
-    <Separator layoutX="232.0" layoutY="52.0" orientation="VERTICAL" prefHeight="641.0" prefWidth="1.0" />
+    <Separator layoutX="231.0" layoutY="52.0" orientation="VERTICAL" prefHeight="997.0" prefWidth="7.0" />
     <Button disable="true" layoutX="27.0" layoutY="134.0" mnemonicParsing="false" onAction="#loadShowAllTransactions" prefHeight="30.0" prefWidth="184.0" text="Zeige alle Transaktionen" />
     <Button disable="false" layoutX="27.0" layoutY="71.0" mnemonicParsing="false" onAction="#loadIndex" prefHeight="30.0" prefWidth="184.0" text="Transaktion hinzufügen" />
-    <Button disable="false" layoutX="27.0" layoutY="193.0" mnemonicParsing="false" onAction="#loadBudget" prefHeight="30.0" prefWidth="184.0" text="[WIP] Budget Übersicht" />
+    <Button disable="false" layoutX="27.0" layoutY="193.0" mnemonicParsing="false" onAction="#loadBudget" prefHeight="30.0" prefWidth="184.0" text="Budget Übersicht" />
 </children>
 </AnchorPane>

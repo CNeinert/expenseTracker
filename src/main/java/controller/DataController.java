@@ -23,7 +23,7 @@ public class DataController {
         try{
             initDb();
         }catch (SQLException sqle){
-            System.err.println("[DATABASE] -> Failed to initialise the database!");
+            AlertHandler.showErrorAlert("Failed to load Database.");
         }
     }
 
@@ -62,9 +62,6 @@ public class DataController {
                 TransactionCategory transactionCategory = new TransactionCategory(standardCategory);
                 this.persist(transactionCategory);
             }
-            System.out.println(" - New categories added! - ");
-        }else{
-            System.out.println(" - No new categories added! - ");
         }
 
 
@@ -167,16 +164,22 @@ public class DataController {
     }
 
     public Object findByIdentifier(Class classObject, String fieldname, String searchterm){
+        var queryResults = findAllByIdentifier(classObject, fieldname, searchterm);
+        return queryResults.size() > 0 ? queryResults.get(0) : null;
+    }
+
+    public List<?> findAllByIdentifier(Class classObject, String fieldname, String searchterm) {
         try {
             // Database Access Object (DAO) for the Contact class
             Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject);
             var queryResults = dao.queryBuilder().where().eq(fieldname, searchterm).query();
             //close connection
             close();
-            if (queryResults.size() > 0 ){
-                return queryResults.get(0);
+
+            if (queryResults == null){
+                return null;
             }
-            return null;
+            return queryResults;
         }
         catch (SQLException e ) {
             e.printStackTrace();
