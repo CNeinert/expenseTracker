@@ -33,7 +33,7 @@ public class BudgetProgressElement {
         double progressedBudget = usedBudget / budget;
         this.category.setText(category);
         this.budget.setText(usedBudget+ " / " + budget);
-        this.percent.setText((int) progressedBudget*100 + " % used.");
+        this.percent.setText((int) (progressedBudget*100) + " % used.");
 
         this.progress.setProgress(progressedBudget);
         if (progressedBudget > 0.8){
