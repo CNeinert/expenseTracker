@@ -112,7 +112,7 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
     }
 
     private void prepareColumn(TableColumn tc, String field){
-        tc.setMinWidth(125);
+        tc.setMinWidth(150);
         tc.setEditable(true);
         tc.setVisible(true);
         tc.setCellValueFactory(new PropertyValueFactory<>(field));

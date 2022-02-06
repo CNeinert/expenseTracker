@@ -43,25 +43,28 @@ public class DataController {
         var test = (TransactionCategory) selectById(TransactionCategory.class, 1L);
         //create the standard Categories only once
         if (test == null){
-            //TODO: provide translation
+            String choiceBox = "Sie haben noch keine Kategorien. Sollen welche erstellt werden?";
+            if (AlertHandler.getChoiceOfChoiceBox(choiceBox)){
+                //TODO: provide translation
 
-            String[] standardIncomeCategories = { "Lohn/Gehalt", "Kindergeld / Unterhalt", "Rente / Pflegegeld",
-                    "Kapitalmarkt", "Sonstiges"};
+                String[] standardIncomeCategories = { "Lohn/Gehalt", "Kindergeld / Unterhalt", "Rente / Pflegegeld",
+                        "Kapitalmarkt", "Sonstiges"};
+                String[] standardCategories = {"", "Miete", "Nebenkosten", "Strom/Wasser/Gas", "Telefon/Internet/Mobil/TV",
+                        "Rundfunkgebühr", "Abonnement", "Versicherung","Nahrungsmittel","Drogerie", "Gesundheit",
+                        "Sparen/Investieren", "KFZ", "Mobilität/ÖPNV", "Geschenke", "Mittag (Arbeit)", "Bäcker","Süßkram",
+                        "Schreibwaren / Büro", "Friseur", "Technik", "Sport", "Reparaturen","Taschengeld", "Schuldentilgung",
+                        "Sonstiges"};
 
-            String[] standardCategories = {"", "Miete", "Nebenkosten", "Strom/Wasser/Gas", "Telefon/Internet/Mobil/TV",
-                    "Rundfunkgebühr", "Abonnement", "Versicherung","Nahrungsmittel","Drogerie", "Gesundheit",
-                    "Sparen/Investieren", "KFZ", "Mobilität/ÖPNV", "Geschenke", "Mittag (Arbeit)", "Bäcker","Süßkram",
-                    "Schreibwaren / Büro", "Friseur", "Technik", "Sport", "Reparaturen","Taschengeld", "Schuldentilgung",
-                    "Sonstiges"};
-
-            for (String standardIncomeCategory : standardIncomeCategories) {
-                TransactionCategory transactionIncCategory = new TransactionCategory(standardIncomeCategory);
-                this.persist(transactionIncCategory);
+                for (String standardIncomeCategory : standardIncomeCategories) {
+                    TransactionCategory transactionIncCategory = new TransactionCategory(standardIncomeCategory);
+                    this.persist(transactionIncCategory);
+                }
+                for (String standardCategory : standardCategories) {
+                    TransactionCategory transactionCategory = new TransactionCategory(standardCategory);
+                    this.persist(transactionCategory);
+                }
             }
-            for (String standardCategory : standardCategories) {
-                TransactionCategory transactionCategory = new TransactionCategory(standardCategory);
-                this.persist(transactionCategory);
-            }
+
         }
 
 
