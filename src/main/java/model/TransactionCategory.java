@@ -24,6 +24,9 @@ public class TransactionCategory implements Persistable {
     @DatabaseField
     private double budget;
 
+    @DatabaseField
+    private boolean isExpense;
+
 
     public TransactionCategory(String category) {
         this.setCategory(category);
@@ -48,6 +51,13 @@ public class TransactionCategory implements Persistable {
         this.category = category;
     }
 
+    public boolean isExpense() {
+        return isExpense;
+    }
+
+    public void setExpense(boolean expense) {
+        isExpense = expense;
+    }
 
     @Override
     public Boolean isEmpty() {

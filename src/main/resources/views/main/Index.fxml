@@ -18,36 +18,47 @@
 
 <AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.IndexController">
    <children>
-      <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="669.0" prefWidth="1014.0">
+      <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="1032.0" prefWidth="1616.0">
          <children>
-            <Label layoutX="55.0" layoutY="106.0" text="Datum" />
-            <DatePicker fx:id="transDate" layoutX="55.0" layoutY="123.0" prefHeight="26.0" prefWidth="163.0" />
-            <Label layoutX="55.0" layoutY="385.0" text="Notizen" />
-            <Label layoutX="57.0" layoutY="163.0" text="Zahlungsmethode" />
-            <ChoiceBox fx:id="paymentMethodField" layoutX="57.0" layoutY="179.0" prefHeight="26.0" prefWidth="316.0" />
-            <Button fx:id="saveButton" layoutX="209.0" layoutY="502.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="24.0" prefWidth="163.0" text="Speichern" />
             <Label layoutX="56.0" layoutY="14.0" text="Transaktion hinzufügen">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
+
+            <Label layoutX="55.0" layoutY="106.0" text="Datum" />
+            <DatePicker fx:id="transDate" layoutX="55.0" layoutY="123.0" prefHeight="26.0" prefWidth="163.0" />
+
+            <Label layoutX="57.0" layoutY="163.0" text="Zahlungsmethode" />
+            <ChoiceBox fx:id="paymentMethodField" layoutX="57.0" layoutY="179.0" prefHeight="26.0" prefWidth="316.0" />
+
             <Label layoutX="57.0" layoutY="216.0" text="Kategorie" />
             <ChoiceBox fx:id="transactionCategorieField" layoutX="57.0" layoutY="232.0" prefHeight="26.0" prefWidth="316.0" />
-            <ComboBox fx:id="tx_receiver" editable="true" layoutX="56.0" layoutY="291.0" prefHeight="26.0" prefWidth="316.0" visibleRowCount="15" />
+
             <Label layoutX="56.0" layoutY="275.0" text="Empfänger" />
-            <Spinner fx:id="amount" editable="true" layoutX="57.0" layoutY="345.0" prefHeight="26.0" prefWidth="210.0" />
+            <ComboBox fx:id="tx_receiver" editable="true" layoutX="56.0" layoutY="291.0" prefHeight="26.0" prefWidth="316.0" visibleRowCount="15" />
+
             <Label layoutX="57.0" layoutY="329.0" text="Betrag" />
+            <Spinner fx:id="amount" editable="true" layoutX="57.0" layoutY="345.0" prefHeight="26.0" prefWidth="210.0" />
+
+            <Label layoutX="55.0" layoutY="385.0" text="Notizen" />
             <TextArea fx:id="txf_notes" layoutX="56.0" layoutY="401.0" prefHeight="85.0" prefWidth="316.0" />
-            <TextField fx:id="tx_newPaymentMethod" layoutX="652.0" layoutY="260.0" prefHeight="24.0" prefWidth="210.0" />
-            <Label layoutX="652.0" layoutY="242.0" text="Zahlungsart hinzufügen" />
-            <Button layoutX="757.0" layoutY="292.0" mnemonicParsing="false" onAction="#saveNewPaymentMethod" prefHeight="24.0" prefWidth="102.0" text="Speichern" />
-            <TextField fx:id="tx_newCategory" layoutX="652.0" layoutY="353.0" prefHeight="24.0" prefWidth="210.0" />
-            <Label layoutX="652.0" layoutY="335.0" text="Kategorie hinzufügen" />
-            <Button layoutX="757.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveNewCategory" prefHeight="24.0" prefWidth="102.0" text="Speichern" />
-            <Spinner fx:id="tx_loadTransaction" editable="true" layoutX="652.0" layoutY="126.0" prefHeight="26.0" prefWidth="210.0" />
-            <Label layoutX="652.0" layoutY="111.0" text="Transaktions ID" />
-            <Button layoutX="652.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadTransaction" prefHeight="26.0" prefWidth="102.0" text="Laden" />
-            <Button layoutX="760.0" layoutY="161.0" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="24.0" prefWidth="102.0" style="-fx-background-color: #f50;" text="Löschen" />
+
+            <Button fx:id="saveButton" layoutX="209.0" layoutY="502.0" mnemonicParsing="false" onAction="#saveNewTransaction" prefHeight="24.0" prefWidth="163.0" text="Speichern" />
+
+
+            <Label layoutX="556.0" layoutY="111.0" text="Transaktions ID" />
+            <Spinner fx:id="tx_loadTransaction" editable="true" layoutX="556.0" layoutY="126.0" prefHeight="26.0" prefWidth="210.0" />
+            <Button layoutX="556.0" layoutY="161.0" mnemonicParsing="false" onAction="#loadTransaction" prefHeight="26.0" prefWidth="102.0" text="Laden" />
+            <Button layoutX="664.0" layoutY="161.0" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="24.0" prefWidth="102.0" style="-fx-background-color: #f50;" text="Löschen" />
+
+            <Label layoutX="556.0" layoutY="242.0" text="Zahlungsart hinzufügen" />
+            <TextField fx:id="tx_newPaymentMethod" layoutX="556.0" layoutY="260.0" prefHeight="24.0" prefWidth="210.0" />
+            <Button layoutX="661.0" layoutY="292.0" mnemonicParsing="false" onAction="#saveNewPaymentMethod" prefHeight="24.0" prefWidth="102.0" text="Speichern" />
+
+            <Label layoutX="556.0" layoutY="335.0" text="Kategorie hinzufügen" />
+            <TextField fx:id="tx_newCategory" layoutX="556.0" layoutY="353.0" prefHeight="24.0" prefWidth="210.0" />
+            <Button layoutX="661.0" layoutY="389.0" mnemonicParsing="false" onAction="#saveNewCategory" prefHeight="24.0" prefWidth="102.0" text="Speichern" />
          </children>
       </AnchorPane>
       <MenuBar prefHeight="29.0" prefWidth="1920.0">

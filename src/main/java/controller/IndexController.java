@@ -169,7 +169,7 @@ public class IndexController extends AbstractViewController implements Initializ
             }
         });
         loadTransactionValueFactory.setValue(0);
-        amountValueFactory.setValue(0.01);
+        amountValueFactory.setValue(0.00);
     }
 
 

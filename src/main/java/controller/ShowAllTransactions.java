@@ -28,22 +28,22 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
     TableColumn ttc_Id = new TableColumn("ID");
 
     @FXML
-    TableColumn ttc_Date = new TableColumn("Date");
+    TableColumn ttc_Date = new TableColumn("Datum");
 
     @FXML
-    TableColumn ttc_paymentMethod = new TableColumn("payment method");
+    TableColumn ttc_paymentMethod = new TableColumn("Zahlungsmethode");
 
     @FXML
-    TableColumn ttc_receiver = new TableColumn("Receiver");
+    TableColumn ttc_receiver = new TableColumn("Empfänger");
 
     @FXML
-    TableColumn ttc_category = new TableColumn("Category");
+    TableColumn ttc_category = new TableColumn("Kategorie");
 
     @FXML
-    TableColumn ttc_amount = new TableColumn("Amount");
+    TableColumn ttc_amount = new TableColumn("Betrag");
 
     @FXML
-    TableColumn ttc_notes = new TableColumn("Notes");
+    TableColumn ttc_notes = new TableColumn("Notizen");
 
     @FXML
     Label lblTitle;
