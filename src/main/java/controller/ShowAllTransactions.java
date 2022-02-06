@@ -2,21 +2,20 @@ package main.java.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.java.model.PaymentMethod;
 import main.java.model.Transaction;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ShowAllTransactions extends AbstractViewController implements Initializable {
@@ -81,6 +80,23 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
         prepareColumn(ttc_category, "categoryWrapper");
         prepareColumn(ttc_amount, "amount");
         prepareColumn(ttc_notes, "notes");
+
+        Comparator<String> columnComparator =
+                (String v1, String v2) -> {
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+                    try {
+                        Date date1 = formatter.parse(v1);
+                        Date date2 = formatter.parse(v2);
+                        return date1.compareTo(date2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return v1.toLowerCase().compareTo(
+                            v2.toLowerCase());
+
+                };
+
+        ttc_Date.setComparator(columnComparator);
 
 
         //ttc_Date.setOnEditCommit((EventHandler<TableColumn.CellEditEvent<Transaction, Date>>) event -> {
