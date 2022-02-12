@@ -13,6 +13,7 @@ import javafx.util.StringConverter;
 import main.java.model.BudgetProgressElement;
 import main.java.model.TransactionCategory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -118,8 +119,13 @@ public class BudgetOverviewController extends AbstractViewController implements 
         category.setBudget(budgetSpinner.getValue());
 
         dc.persist(category);
-        AlertHandler.showInfoAlert("New Budget set.");
-
+        try {
+            this.loadBudget();
+            AlertHandler.showInfoAlert("New Budget set.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            AlertHandler.showErrorAlert("Cannot load Budget Overview!");
+        }
 
     }
 

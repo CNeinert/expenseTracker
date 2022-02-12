@@ -2,4 +2,5 @@
 
 v0.8.6
 - [BUGFIX] save budget as double not as integer
+- [TASK] Update Budgetoverview View after setting a new Budget
 - 
