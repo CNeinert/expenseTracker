@@ -13,7 +13,6 @@ import javafx.util.StringConverter;
 import main.java.model.BudgetProgressElement;
 import main.java.model.TransactionCategory;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -42,7 +41,7 @@ public class BudgetOverviewController extends AbstractViewController implements 
     ChoiceBox<String> budgetSelect;
 
     @FXML
-    Spinner<Integer> budgetSpinner = new Spinner<>(Integer.MIN_VALUE, Integer.MAX_VALUE, 1, 1);
+    Spinner<Double> budgetSpinner = new Spinner<Double>(Integer.MIN_VALUE, Integer.MAX_VALUE, 1, 1);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,19 +62,20 @@ public class BudgetOverviewController extends AbstractViewController implements 
     }
 
     private void setupBudgetForm(){
-        SpinnerValueFactory<Integer> budgetSpinnerValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(Integer.MIN_VALUE, Integer.MAX_VALUE);
+        SpinnerValueFactory<Double> budgetSpinnerValueFactory = new SpinnerValueFactory.DoubleSpinnerValueFactory(Double.MAX_VALUE*(-1), Double.MAX_VALUE);
         budgetSpinner.setEditable(true);
 
-        budgetSpinnerValueFactory.setConverter(new StringConverter<Integer>() {
-            private final DecimalFormat df = new DecimalFormat("#");
+        budgetSpinnerValueFactory.setConverter(new StringConverter<Double>() {
+            private final DecimalFormat df = new DecimalFormat("##.##");
 
             @Override
-            public String toString(Integer integer) {
-                return this.df.format(integer);
+            public String toString(Double aDouble) {
+                // If the specified value is null, return a zero-length String
+                return this.df.format(aDouble);
             }
 
             @Override
-            public Integer fromString(String s) {
+            public Double fromString(String s) {
                 try {
                     // If the specified value is null or zero-length, return null
                     if (s == null) {
@@ -86,7 +86,7 @@ public class BudgetOverviewController extends AbstractViewController implements 
                         return null;
                     }
                     // Perform the requested parsing
-                    return df.parse(s).intValue();
+                    return df.parse(s).doubleValue();
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -94,13 +94,13 @@ public class BudgetOverviewController extends AbstractViewController implements 
 
         });
         budgetSpinner.setValueFactory(budgetSpinnerValueFactory);
-        budgetSpinner.valueProperty().addListener(new ChangeListener<Integer>() {
+        budgetSpinner.valueProperty().addListener(new ChangeListener<Double>() {
             @Override
-            public void changed(ObservableValue<? extends Integer> observableValue, Integer integer, Integer t1) {
+            public void changed(ObservableValue<? extends Double> observableValue, Double aDouble, Double t1) {
 
             }
         });
-        budgetSpinnerValueFactory.setValue(0);
+        budgetSpinnerValueFactory.setValue(0.0);
 
         ObservableList<String> olTransCategory = FXCollections.observableArrayList();
         DataController dc = new DataController();
