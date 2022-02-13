@@ -9,6 +9,9 @@ on:
     tags:
       - '*'
 
+env:
+  FILENAME: empty
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -28,6 +31,8 @@ jobs:
       run: |
         mvn -T 4 package
         mkdir staging && cp target/*.jar staging
+        cd staging && ls *.jar > $FILENAME
+        
 
     - name: Step 3 - Persist workflow data as artifacts
       uses: actions/upload-artifact@v2
@@ -53,5 +58,6 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_name: $FILENAME
           asset_path: staging/*.jar
           asset_content_type: application/gzip
