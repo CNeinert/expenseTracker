@@ -126,7 +126,7 @@ public class DataController {
         }
     }
 
-    public ObservableList<Object> selectAll(Class classObject){
+    public ObservableList<?> selectAll(Class classObject){
         try {
             // Database Access Object (DAO) for the Contact class
             Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject );

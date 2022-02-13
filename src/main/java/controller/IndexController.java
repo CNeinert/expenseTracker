@@ -178,21 +178,18 @@ public class IndexController extends AbstractViewController implements Initializ
         ObservableList<String> olPaymentMethod = FXCollections.observableArrayList();
         ObservableList<String> olReceivers = FXCollections.observableArrayList();
 
-        List<Object> CategoryList = dc.selectAll(TransactionCategory.class);
-        List<Object> PaymentMethodList = dc.selectAll(PaymentMethod.class);
-        List<Object> ReceiversList = dc.selectAll(Receiver.class);
+        List<TransactionCategory> CategoryList = (List<TransactionCategory>) dc.selectAll(TransactionCategory.class);
+        List<PaymentMethod> PaymentMethodList = (List<PaymentMethod>) dc.selectAll(PaymentMethod.class);
+        List<Receiver> ReceiversList = (List<Receiver>) dc.selectAll(Receiver.class);
 
-        for (Object item : CategoryList) {
-            TransactionCategory thisItem = (TransactionCategory)item;
-            olTransCategory.add(thisItem.getCategory());
+        for (TransactionCategory item : CategoryList) {
+            olTransCategory.add(item.getCategory());
         }
-        for (Object item : PaymentMethodList) {
-            PaymentMethod thisItem = (PaymentMethod)item;
-            olPaymentMethod.add(thisItem.getPaymentMethod());
+        for (PaymentMethod paymentMethod : PaymentMethodList) {
+            olPaymentMethod.add(paymentMethod.getPaymentMethod());
         }
-        for (Object item : ReceiversList) {
-            Receiver thisItem = (Receiver) item;
-            olReceivers.add(thisItem.getReceiverName());
+        for (Receiver receiver : ReceiversList) {
+            olReceivers.add(receiver.getReceiverName());
         }
 
         transactionCategorieField.setItems(olTransCategory);

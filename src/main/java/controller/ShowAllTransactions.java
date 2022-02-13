@@ -67,7 +67,7 @@ public class ShowAllTransactions extends AbstractViewController implements Initi
     public void initTableCols() {
 
         //get Data from DB
-        final ObservableList<Object> allTransactions =  new  DataController().selectAll(Transaction.class);
+        final ObservableList<Transaction> allTransactions = (ObservableList<Transaction>) new  DataController().selectAll(Transaction.class);
 
         ObservableList<Transaction> transactionObservableList = FXCollections.observableArrayList();
         transactionObservableList.add(new Transaction());

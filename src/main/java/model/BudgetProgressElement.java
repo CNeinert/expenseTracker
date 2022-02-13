@@ -5,6 +5,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 
+import java.text.DecimalFormat;
+
 public class BudgetProgressElement {
     // Progressbar
     // Label: Category
@@ -20,6 +22,7 @@ public class BudgetProgressElement {
     Label percent = new Label();
 
     public BudgetProgressElement(String category, double budget, double usedBudget, int offset){
+
         if (usedBudget < 0){
             usedBudget *= (-1);
         }
@@ -29,14 +32,24 @@ public class BudgetProgressElement {
         if (budget == 0) {
             budget = usedBudget;
         }
+        DecimalFormat df = new DecimalFormat("#.##");
 
         double progressedBudget = usedBudget / budget;
+        var percentString = df.format((int) (progressedBudget*100) )+ " % used.";
+        var budgetString = df.format(usedBudget) + " / " + df.format(budget);
+
         this.category.setText(category);
-        this.budget.setText(usedBudget+ " / " + budget);
-        this.percent.setText((int) (progressedBudget*100) + " % used.");
+        this.budget.setText(budgetString);
+        this.percent.setText(percentString);
 
         this.progress.setProgress(progressedBudget);
+        if (progressedBudget < 0.8){
+            this.progress.setStyle("-fx-accent: green;");
+        }
         if (progressedBudget > 0.8){
+            this.progress.setStyle("-fx-accent: yellow;");
+        }
+        if (progressedBudget > 1.0){
             this.progress.setStyle("-fx-accent: red;");
         }
         setLayout(offset);

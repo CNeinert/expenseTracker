@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class BudgetOverviewController extends AbstractViewController implements Initializable {
 
@@ -36,7 +37,7 @@ public class BudgetOverviewController extends AbstractViewController implements 
     @FXML
     Label labelMonth = new Label();
 
-    ObservableList<Object> allCategories = null;
+    ObservableList<TransactionCategory> allCategories = null;
 
     @FXML
     ChoiceBox<String> budgetSelect;
@@ -105,7 +106,7 @@ public class BudgetOverviewController extends AbstractViewController implements 
 
         ObservableList<String> olTransCategory = FXCollections.observableArrayList();
         DataController dc = new DataController();
-        List<Object> CategoryList = dc.selectAll(TransactionCategory.class);
+        List<TransactionCategory> CategoryList = (List<TransactionCategory>) dc.selectAll(TransactionCategory.class);
         for (Object item : CategoryList) {
             TransactionCategory thisItem = (TransactionCategory)item;
             olTransCategory.add(thisItem.getCategory());
@@ -130,22 +131,33 @@ public class BudgetOverviewController extends AbstractViewController implements 
     }
 
     private void initBudgetOverview(){
-        this.allCategories =  new  DataController().selectAll(TransactionCategory.class);
+        this.allCategories = (ObservableList<TransactionCategory>) new DataController().selectAll(TransactionCategory.class);
         mainPane = (Pane) scrollBarMonth.getParent();
         ObservableList<ProgressBar> progressList = FXCollections.observableArrayList();
         labelMonth.setText(getCurrentMonth());
         int offsetCounter = 0;
         try {
+            BudgetProgressElement bpe0 = new BudgetProgressElement(
+                    "Total",
+                    this.allCategories.stream().mapToDouble(TransactionCategory::getBudget).sum(),
+                    this.allCategories.get(0).getBudgetOfMonth(new Date()),
+                    offsetCounter
+            );
+            bpe0.addToPane(mainPane);
+            offsetCounter++;
+
             for ( var category : this.allCategories) {
 
-                TransactionCategory thisCategory = (TransactionCategory) category;
-                if (thisCategory.getCategory_id() <= 5){ //only get expenditure categories
+                if (category.getCategory_id() <= 5){ //only get expenditure categories
+                    continue;
+                }
+                if (category.getBudget() == 0){
                     continue;
                 }
                 BudgetProgressElement bpe = new BudgetProgressElement(
-                        thisCategory.getCategory(),
-                        thisCategory.getBudget(),
-                        thisCategory.getBudgetOfMonth(new Date()),
+                        category.getCategory(),
+                        category.getBudget(),
+                        category.getBudgetOfMonth(new Date()),
                         offsetCounter
                 );
 
