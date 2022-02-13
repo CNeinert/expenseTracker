@@ -35,7 +35,7 @@ public class BudgetProgressElement {
         DecimalFormat df = new DecimalFormat("#.##");
 
         double progressedBudget = usedBudget / budget;
-        var percentString = df.format((int) (progressedBudget*100) )+ " % used.";
+        var percentString = " ("+df.format((int) (progressedBudget*100) )+ " % used.)";
         var budgetString = df.format(usedBudget) + " / " + df.format(budget);
 
         this.category.setText(category);

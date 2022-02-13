@@ -140,7 +140,15 @@ public class BudgetOverviewController extends AbstractViewController implements 
             BudgetProgressElement bpe0 = new BudgetProgressElement(
                     "Total",
                     this.allCategories.stream().mapToDouble(TransactionCategory::getBudget).sum(),
-                    this.allCategories.get(0).getBudgetOfMonth(new Date()),
+                    this.allCategories.stream().mapToDouble(category -> {
+                        try {
+                            return category.getBudgetOfMonth(new Date());
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        return 0;
+                    }).sum(),
+                    //this.allCategories.get(0).getBudgetOfMonth(new Date()),
                     offsetCounter
             );
             bpe0.addToPane(mainPane);
