@@ -57,5 +57,5 @@ jobs:
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_name: Haushaltsbuch-${{ github.ref }}.jar
-          asset_path: staging/*.jar
+          asset_path: staging/Haushaltsbuch.jar
           asset_content_type: application/gzip
