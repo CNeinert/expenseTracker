@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.cneinert.java.expenseTracker</groupId>
-    <artifactId>expenseTracker</artifactId>
-    <version>0.8.0</version>
+    <artifactId>Haushaltsbuch</artifactId>
+    <version>${project.version}</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <javafx.version>17.0.2</javafx.version>
+        <project.version>0.8.6</project.version>
         <mainClass>main.java.run.GUIStarter</mainClass>
     </properties>
     <distributionManagement>
@@ -66,9 +67,27 @@
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
+
                         <manifest>
                             <mainClass>${mainClass}</mainClass>
+                            <addClasspath/>
+                            <addDefaultEntries/>
+                            <addDefaultImplementationEntries/>
+                            <addDefaultSpecificationEntries/>
+                            <addBuildEnvironmentEntries/>
+                            <addExtensions/>
+                            <classpathLayoutType/>
+                            <classpathPrefix/>
+                            <customClasspathLayout/>
+                            <mainClass/>
+                            <packageName/>
+                            <useUniqueVersions/>
                         </manifest>
+                        <manifestEntries>
+                            <mainClass>${mainClass}</mainClass>
+                            <buildLabel>${project.version}</buildLabel>
+                        </manifestEntries>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
                 </configuration>
                 <executions>

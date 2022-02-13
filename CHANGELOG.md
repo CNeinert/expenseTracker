@@ -7,3 +7,4 @@ v0.8.6
 - [TASK] change budget colors
 - [TASK] add total budget progressbar
 - [TASK] add sum of total used budget
+- [TASK] add Version to window title
