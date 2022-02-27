@@ -14,8 +14,8 @@
                 </font>
             </Label>
 
-            <ScrollBar fx:id="scrollBarMonth" disable="true" layoutX="50.0" layoutY="91.0" prefHeight="15.0" prefWidth="332.0" value="100.0" />
-            <Label fx:id="labelMonth" layoutX="50.0" layoutY="51.0" prefHeight="40.0" prefWidth="332.0" text="Monat" textAlignment="CENTER">
+            <ScrollBar fx:id="scrollBarMonth" disable="true" layoutX="50.0" layoutY="91.0" prefHeight="15.0" prefWidth="332.0" value="100.0" visible="false" />
+            <Label fx:id="labelMonth" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="51.0" prefHeight="40.0" prefWidth="121.0" text="Monat" textAlignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
@@ -24,8 +24,8 @@
             <ChoiceBox fx:id="budgetSelect" layoutX="521.0" layoutY="39.0" prefHeight="24.0" prefWidth="209.0" />
             <Spinner fx:id="budgetSpinner" layoutX="521.0" layoutY="71.0" prefHeight="24.0" prefWidth="209.0" />
             <Label fx:id="labelBudgetForm" layoutX="521.0" layoutY="21.0" text="Budget setzen" />
-            <Button fx:id="decreaseMonth" layoutX="7.0" layoutY="58.0" mnemonicParsing="false" onAction="#decreaseMonth" text="&lt;&lt;" />
-            <Button fx:id="increaseMonth" layoutX="276.0" layoutY="58.0" mnemonicParsing="false" onAction="#increaseMonth" text="&gt;&gt;" />
+            <Button fx:id="decreaseMonth" layoutX="50.0" layoutY="58.0" mnemonicParsing="false" onAction="#decreaseMonth" text="&lt;&lt;" />
+            <Button fx:id="increaseMonth" layoutX="214.0" layoutY="58.0" mnemonicParsing="false" onAction="#increaseMonth" text="&gt;&gt;" />
 
         </children>
     </AnchorPane>
