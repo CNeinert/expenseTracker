@@ -4,8 +4,10 @@ package main.java.model;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 @DatabaseTable
 public class Transaction implements Persistable {
@@ -32,12 +34,26 @@ public class Transaction implements Persistable {
     private String notes;
 
     public Transaction(Date date, PaymentMethod paymentMethod,Receiver receiver , TransactionCategory transactionCategory,
-                       double amountPayed, double amountReceived, String notes) {
+                       double amountPayed, String notes) {
         this.setDate(date);
+        this.setPaymentMethod(paymentMethod);
+        this.setReceiver(receiver);
+        this.setTransactionCategory(transactionCategory);
+        this.setAmount(amountPayed);
+        this.setNotes(notes);
 
     }
 
     public Transaction(){}
+
+    public Transaction(Map<String, String> map) throws ParseException {
+        this.setDateFromString(map.get("date"));//todo ...
+        this.setPaymentMethod(PaymentMethod.loadFromDatabase(map.get("paymentMethod")));
+        this.setReceiver(Receiver.loadFromDatabase(map.get("receiver")));
+        this.setTransactionCategory(TransactionCategory.loadFromDatabase(map.get("transactionCategory")));
+        this.setAmount(Double.parseDouble(map.get("date")));
+        this.setNotes(notes);
+    }
 
     public int getTransaction_id() {
         return transaction_id;
@@ -53,6 +69,10 @@ public class Transaction implements Persistable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public void setDateFromString(String date) throws ParseException {
+        this.date = new SimpleDateFormat("dd.mm.yyyy").parse(date);
     }
 
     public PaymentMethod getPaymentMethod() {

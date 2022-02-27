@@ -1,29 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollBar?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.BudgetOverviewController">
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.controller.BudgetOverviewController">
 <children>
     <AnchorPane layoutX="235.0" layoutY="29.0" prefHeight="1046.0" prefWidth="1673.0">
         <children>
-            <Label layoutX="50.0" layoutY="14.0" text="Budget Übersicht">
+            <Label fx:id="labelMain" layoutX="50.0" layoutY="14.0" text="Budget Übersicht">
                 <font>
                     <Font size="24.0" />
                 </font>
             </Label>
-
-
 
             <ScrollBar fx:id="scrollBarMonth" disable="true" layoutX="50.0" layoutY="91.0" prefHeight="15.0" prefWidth="332.0" value="100.0" />
             <Label fx:id="labelMonth" layoutX="50.0" layoutY="51.0" prefHeight="40.0" prefWidth="332.0" text="Monat" textAlignment="CENTER">
@@ -31,10 +20,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="758.0" layoutY="71.0" mnemonicParsing="false" onAction="#saveNewBudget" prefHeight="24.0" prefWidth="94.0" text="Speichern" />
+            <Button fx:id="saveBudgetButton" layoutX="758.0" layoutY="71.0" mnemonicParsing="false" onAction="#saveNewBudget" prefHeight="24.0" prefWidth="94.0" text="Speichern" />
             <ChoiceBox fx:id="budgetSelect" layoutX="521.0" layoutY="39.0" prefHeight="24.0" prefWidth="209.0" />
             <Spinner fx:id="budgetSpinner" layoutX="521.0" layoutY="71.0" prefHeight="24.0" prefWidth="209.0" />
-            <Label layoutX="521.0" layoutY="21.0" text="Budget setzen" />
+            <Label fx:id="labelBudgetForm" layoutX="521.0" layoutY="21.0" text="Budget setzen" />
+            <Button fx:id="decreaseMonth" layoutX="7.0" layoutY="58.0" mnemonicParsing="false" onAction="#decreaseMonth" text="&lt;&lt;" />
+            <Button fx:id="increaseMonth" layoutX="276.0" layoutY="58.0" mnemonicParsing="false" onAction="#increaseMonth" text="&gt;&gt;" />
 
         </children>
     </AnchorPane>
