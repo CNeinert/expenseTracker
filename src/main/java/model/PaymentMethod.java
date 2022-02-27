@@ -2,6 +2,7 @@ package main.java.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import main.java.controller.DataController;
 
 @DatabaseTable
 public class PaymentMethod implements Persistable {
@@ -45,5 +46,10 @@ public class PaymentMethod implements Persistable {
     @Override
     public Class<?> getThisClass() {
         return this.getClass();
+    }
+
+    public static PaymentMethod loadFromDatabase(String paymentMethod){
+        DataController dc = new DataController();
+        return (PaymentMethod) dc.findByIdentifier(PaymentMethod.class, "payment_method", paymentMethod );
     }
 }

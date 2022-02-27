@@ -105,4 +105,9 @@ public class TransactionCategory implements Persistable {
 
         return currentMonth.equals(YearMonth.from(givenLocalDateTimeObject));
     }
+
+    public static TransactionCategory loadFromDatabase(String categoryName){
+        DataController dc = new DataController();
+        return (TransactionCategory) dc.findByIdentifier(TransactionCategory.class, "category", categoryName );
+    }
 }
