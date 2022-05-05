@@ -22,6 +22,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class IndexController extends AbstractViewController implements Initializable {
