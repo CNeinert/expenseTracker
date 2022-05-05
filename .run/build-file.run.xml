@@ -14,6 +14,7 @@
           <option name="printErrorStackTraces" value="false" />
           <option name="showDialogWithAdvancedSettings" value="false" />
           <option name="threads" value="12" />
+          <option name="useMavenConfig" value="false" />
           <option name="usePluginRegistry" value="false" />
           <option name="userSettingsFile" value="" />
           <option name="workOffline" value="false" />
@@ -29,6 +30,7 @@
             <list>
               <option value="clean" />
               <option value="compile" />
+              <option value="assembly:single" />
               <option value="package" />
             </list>
           </option>
