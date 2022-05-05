@@ -69,6 +69,6 @@ public class ExpenseTracker extends Application{
             e.printStackTrace();
         }
         */
-        return "v0.9.2";
+        return "v0.9.2 rev2";
     }
 }
