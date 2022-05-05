@@ -180,7 +180,8 @@ public class IndexController extends AbstractViewController implements Initializ
 
         List<TransactionCategory> CategoryList = (List<TransactionCategory>) dc.selectAll(TransactionCategory.class);
         List<PaymentMethod> PaymentMethodList = (List<PaymentMethod>) dc.selectAll(PaymentMethod.class);
-        List<Receiver> ReceiversList = (List<Receiver>) dc.selectAll(Receiver.class);
+        List<Receiver> receiverList = (List<Receiver>) dc.selectAll(Receiver.class);
+        receiverList = receiverList.stream().sorted(Comparator.comparing(Receiver::getReceiverName)).collect(Collectors.toList());
 
         for (TransactionCategory item : CategoryList) {
             olTransCategory.add(item.getCategory());
@@ -188,7 +189,7 @@ public class IndexController extends AbstractViewController implements Initializ
         for (PaymentMethod paymentMethod : PaymentMethodList) {
             olPaymentMethod.add(paymentMethod.getPaymentMethod());
         }
-        for (Receiver receiver : ReceiversList) {
+        for (Receiver receiver : receiverList) {
             olReceivers.add(receiver.getReceiverName());
         }
 
