@@ -40,6 +40,9 @@ public class IndexController extends AbstractViewController implements Initializ
     ChoiceBox transactionCategorieField;
 
     @FXML
+    ChoiceBox transactionCategorieFieldEntry;
+
+    @FXML
     ChoiceBox paymentMethodField;
 
     @FXML
@@ -62,6 +65,9 @@ public class IndexController extends AbstractViewController implements Initializ
 
     @FXML
     private ComboBox<String> tx_receiver = new ComboBox<String>();
+
+    @FXML
+    private ComboBox<String> tx_receiver_category_helper = new ComboBox<String>();
 
     @FXML
     private Spinner<Double> amount = new Spinner<>(Double.MIN_VALUE, Double.MAX_VALUE, 0.00, 1.00);
@@ -195,9 +201,27 @@ public class IndexController extends AbstractViewController implements Initializ
         }
 
         transactionCategorieField.setItems(olTransCategory);
+        transactionCategorieFieldEntry.setItems(olTransCategory);
         paymentMethodField.setItems(olPaymentMethod);
         tx_receiver.setItems(olReceivers);
+        tx_receiver_category_helper.setItems(olReceivers);
 
+    }
+
+    @FXML
+    private void updateFilter(){
+        TransactionCategory category = (TransactionCategory) dc.findByIdentifier(TransactionCategory.class, "category", transactionCategorieField.getValue().toString());
+        ObservableList<String> olReceivers = FXCollections.observableArrayList();
+
+        List<Receiver> receiverList = (List<Receiver>) dc.selectAllByField(Receiver.class, "category_id", category, true);
+        receiverList = receiverList.stream().sorted(Comparator.comparing(Receiver::getReceiverName)).collect(Collectors.toList());
+
+
+        for (Receiver receiver : receiverList) {
+            olReceivers.add(receiver.getReceiverName());
+        }
+
+        tx_receiver.setItems(olReceivers);
     }
 
     public void saveNewTransaction(){
@@ -216,6 +240,7 @@ public class IndexController extends AbstractViewController implements Initializ
 
             if (receiver == null){
                 Receiver newreceiver = new Receiver(tx_receiver.getValue().toString());
+                newreceiver.setTransactionCategory((TransactionCategory) category);
                 dc.persist(newreceiver);
                 receiver = newreceiver;
             }
@@ -256,6 +281,16 @@ public class IndexController extends AbstractViewController implements Initializ
         dc.persist(newCategory);
         initChoiceBoxes();
         AlertHandler.showInfoAlert("New Category: '"+ newCategory.getCategory() +"' created");
+    }
+
+    public void updateCategoryOfReceiver(){
+        Receiver receiver = (Receiver) dc.findByIdentifier(Receiver.class, "receiverName", tx_receiver_category_helper.getValue());
+        var category = dc.findByIdentifier(TransactionCategory.class, "category", transactionCategorieFieldEntry.getValue().toString());
+        if (receiver == null){
+            receiver = new Receiver(tx_receiver_category_helper.getValue());
+        }
+        receiver.setTransactionCategory((TransactionCategory) category);
+        dc.persist(receiver);
     }
 
     public void resetView(){

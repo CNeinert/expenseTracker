@@ -166,6 +166,27 @@ public class DataController {
         return null;
     }
 
+
+    public List<?> selectAllByField(Class classObject, String field, Object object, Boolean getAllIfEmpty ){
+        try {
+            // Database Access Object (DAO) for the Contact class
+            Dao<Object, String> dao = DaoManager.createDao( getConnectionSource(), classObject);
+            List<Object> queryResult = dao.queryForEq( field, object );
+            //close connection
+            close();
+            List<?> result = (List<?>) queryResult;
+            if (result.isEmpty() && getAllIfEmpty){
+                result = this.selectAll(classObject);
+            }
+            return result;
+        }
+        catch (SQLException e ) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public Object findByIdentifier(Class classObject, String fieldname, String searchterm){
         var queryResults = findAllByIdentifier(classObject, fieldname, searchterm);
         return queryResults.size() > 0 ? queryResults.get(0) : null;

@@ -11,6 +11,9 @@ public class Receiver implements Persistable{
     @DatabaseField
     private String receiverName;
 
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "category_id")
+    private TransactionCategory transactionCategory;
+
     public Receiver(String receiver){
         this.setReceiverName(receiver);
     }
@@ -41,6 +44,14 @@ public class Receiver implements Persistable{
     @Override
     public Class<?> getThisClass() {
         return this.getClass();
+    }
+
+    public TransactionCategory getTransactionCategory() {
+        return transactionCategory;
+    }
+
+    public void setTransactionCategory(TransactionCategory transactionCategory) {
+        this.transactionCategory = transactionCategory;
     }
 
     public static Receiver loadFromDatabase(String receiverNameName){

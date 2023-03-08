@@ -8,15 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import main.java.controller.AlertHandler;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
-import java.util.jar.Attributes;
-import java.util.jar.Manifest;
 
 public class ExpenseTracker extends Application{
 
@@ -69,6 +61,6 @@ public class ExpenseTracker extends Application{
             e.printStackTrace();
         }
         */
-        return "v0.9.2 rev2";
+        return "v0.10.0";
     }
 }
